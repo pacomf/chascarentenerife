@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Chascar en Tenerife</string>
+    <!-- TODO: Cambiar la KEY para la API de Google Place y la Web o IP y el PORT del BackEnd, donde lo tengamos desplegado -->
+    <string name="key_api_place">KEY</string>
+    <string name="ip_server">WEB</string>
+    <string name="port_server">PORT</string>
+    <string name="milocalizacion">Mi localización</string>
+    <string name="ficheroinicial">datos_version_uno.json</string>
+    <string name="procesando">Procesando...</string>
+    <string name="location">Espere mientras se determina su ubicación actual. Se recomienda habilitar el GPS.</string>
+    <string name="descargando">Procesando los Nuevos Datos</string>
+    <string name="en_proceso">En proceso... Ten paciencia</string>
+    <string name="esperar">Espere Por Favor</string>
+    <string name="actualizando">Actualizando los datos.</string>
+    <string name="fallos">Se han lanzando un numero considerable de excepciones durante este proceso. Es posible que algunos datos no sean consistentes.</string>
+    <string name="problemautocompletado">Ha habido un problema buscando sugerencias de autocompletado. Interactue directamente en el mapa o intentelo de nuevo.</string>
+    <string name="nomunicipios">No existe ningún establecimiento en este municipio o los datos son incosistentes. Vuelva hacia atrás y reintentelo.</string>
+    <string name="comprobar_actualizaciones">Comprobando si hay datos más recientes en el servidor.</string>
+    <string name="no_internet">Excepción NI: No se ha detectado una conexión estable a Internet. Los datos de la aplicación puede que no sean los más actuales.</string>
+    <string name="excepcion_version">Excepción EV: Ha habido un problema en la comunicación con el servidor.</string>
+    <string name="excepcion_parsear_json">Excepción EPJ: Ha habido un problema en la conexión con el servidor.</string>
+    <string name="excepcion_convertir_json">Excepción ECJ: Ha habido un problema en al conexión con el servidor.</string>
+    <string name="gotodirection">Ir hacia la dirección</string>
+    <string name="enmapa">Ver en el mapa</string>
+    <string name="info">Informacion</string>
+    <string name="placeholder">Introduzca una dirección...</string>
+    
+    <!-- Info -->
+    <string name="infoBotonLocation">Pulsando sobre este icono se calculará nuestra posición actual y se visualiarán en el mapa todos los establecimientos cercanos a nosotros en ese instante.</string>
+    <string name="infoBotonClean">Pulsando sobre este icono se resetearán todos los datos de búsqueda, tanto la dirección como los marcadores que hubiera en el mapa.</string>
+    <string name="infoBotonMapa">Pulsando sobre este icono mostrará toda la lista de los establecimientos del municipio en el mapa.</string>
+    <string name="infoBotonDireccion">Pulsando sobre este icono se calculará la ruta, desde nuestra posición actual, para llegar al establecimiento que estaba seleccionado en el mapa.</string>
+    <string name="infoBotonInfo">Pulsando sobre este icono accedemos a la información de la aplicación. Esta página.</string>
+	<string name="infoItemA">Esta opción permite la geolocalización de los establecimientos cercanos a un punto.</string>
+	<string name="infoItemAExtra">El punto de referencia para buscar establecimientos cercanos, puede ser nuestra propia localización en ese instante, o puede ser una dirección que introduciremos en el campo de texto mediante ayuda de las opciones de autocompletado que nos irá sugiriendo la propia aplicación. También podemos interactuar directamente con el mapa. Con un click prolongado situaremos la posición desde la que se calculará los establecimientos cercanos, y podremos jugar con esa posición, arrastrando el marcador por el mapa para moverlo de ubicación.</string>
+    <string name="infoItemB">Esta opción nos permitirá mostrar los establecimientos de un municipio determinado.</string>
+    
+    <!-- Muncipios 10.213.3.139 -->
+    <string name="adeje">Adeje</string>
+    <string name="arafo">Arafo</string>
+    <string name="arico">Arico</string>
+    <string name="arona">Arona</string>
+    <string name="buenavista_del_norte">Buenavista del Norte</string>
+    <string name="candelaria">Candelaria</string>
+    <string name="el_rosario">El Rosario</string>
+    <string name="el_sauzal">El Sauzal</string>
+    <string name="fasnia">Fasnia</string>
+    <string name="garachico">Garachico</string>
+    <string name="granadilla">Granadilla de Abona</string>
+    <string name="guia_de_isora">Guia de Isora</string>
+    <string name="guimar">Güimar</string>
+    <string name="icod_de_los_vinos">Icod de los Vinos</string>
+    <string name="la_guancha">La Guancha</string>
+    <string name="la_laguna">La Laguna</string>
+    <string name="la_matanza_de_acentejo">La Matanza de Acentejo</string>
+    <string name="la_orotava">La Orotava</string>
+    <string name="la_victoria_de_acentejo">La Victoria de Acentejo</string>
+    <string name="los_realejos">Los Realejos</string>
+    <string name="los_silos">Los Silos</string>
+    <string name="puerto_de_la_cruz">Puerto de La Cruz</string>
+    <string name="san_juan_de_la_rambla">San Juan de La Rambla</string>
+    <string name="san_miguel">San Miguel</string>
+    <string name="santa_cruz_de_tenerife">Santa Cruz de Tenerife</string>
+    <string name="santa_ursula">Santa Ursula</string>
+    <string name="santiago_del_teide">Santiago del Teide</string>
+    <string name="tacoronte">Tacoronte</string>
+    <string name="tanque">Tanque</string>
+    <string name="tegueste">Tegueste</string>
+    <string name="vilaflor">Vilaflor</string>
+
+    <string-array name="lista_municipios">
+        <item>@string/adeje</item>
+        <item>@string/arafo</item>
+        <item>@string/arico</item>
+        <item>@string/arona</item>
+        <item>@string/buenavista_del_norte</item>
+        <item>@string/candelaria</item>
+        <item>@string/el_rosario</item>
+        <item>@string/el_sauzal</item>
+        <item>@string/fasnia</item>
+        <item>@string/garachico</item>
+        <item>@string/granadilla</item>
+        <item>@string/guia_de_isora</item>
+        <item>@string/guimar</item>
+        <item>@string/icod_de_los_vinos</item>
+        <item>@string/la_guancha</item>
+        <item>@string/la_laguna</item>
+        <item>@string/la_matanza_de_acentejo</item>
+        <item>@string/la_orotava</item>
+        <item>@string/la_victoria_de_acentejo</item>
+        <item>@string/los_realejos</item>
+        <item>@string/los_silos</item>
+        <item>@string/puerto_de_la_cruz</item>
+        <item>@string/san_juan_de_la_rambla</item>
+        <item>@string/san_miguel</item>
+        <item>@string/santa_cruz_de_tenerife</item>
+        <item>@string/santa_ursula</item>
+        <item>@string/santiago_del_teide</item>
+        <item>@string/tacoronte</item>
+        <item>@string/tanque</item>
+        <item>@string/tegueste</item>
+        <item>@string/vilaflor</item>
+    </string-array>
+
+    <!-- Tipo de Establecimientos -->
+    <string name="arepera">Arepera</string>
+    <string name="asador">Asador</string>
+    <string name="autobar">Autobar</string>
+    <string name="bar">Bar</string>
+    <string name="bar_piscina">Bar Piscina</string>
+    <string name="barcafeteria">Bar-Cafeteria</string>
+    <string name="boutique_del_pan">Boutique del Pan</string>
+    <string name="buffet">Buffett</string>
+    <string name="cafe">Cafe</string>
+    <string name="cafeteria">Cafeteria</string>
+    <string name="cafeteriarestaurante">Cafeteria-Restaurante</string>
+    <string name="cervezeria">Cerveceria</string>
+    <string name="churrasqueria">Churrasqueria</string>
+    <string name="churreria">Churreria</string>
+    <string name="ciber_cafe">Ciber Cafe</string>
+    <string name="club">Club</string>
+    <string name="croissanteria">Croissanteria</string>
+    <string name="discoteca">Discoteca</string>
+    <string name="dulceria">Dulceria</string>
+    <string name="guachinche">Guachinche</string>
+    <string name="hamburgueseria">Hamburgueseria</string>
+    <string name="heladeria">Heladeria</string>
+    <string name="hotel_rural">Hotel Rural</string>
+    <string name="karaoke">Karaoke</string>
+    <string name="kiosco">Kiosco</string>
+    <string name="marisqueria">Marisqueria</string>
+    <string name="meson">Meson</string>
+    <string name="parrilla">Parrilla</string>
+    <string name="pasteleria">Pasteleria</string>
+    <string name="piano_bar">Piano Bar</string>
+    <string name="pizzeria">Pizzeria</string>
+    <string name="pub">Pub</string>
+    <string name="restaurante">Restaurante</string>
+    <string name="restuarantecafeteria">Restaurante-Cafeteria</string>
+    <string name="sala_de_fiestas">Sala de Fiestas</string>
+    <string name="salon_recreativo">Salon Recreativo</string>
+    <string name="self_service">Self-Service</string>
+    <string name="snack">Snack</string>
+    <string name="taberna">Taberna</string>
+    <string name="tasca">Tasca</string>
+    <string name="terraza">Terraza</string>
+    <string name="terraza_de_verano">Terraza de Verano</string>
+    <string name="ventorrillo">Ventorrillo</string>
+    <string name="zumeria">Zumeria</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_alrededor">Buscar cercanos a...</string>
+    <string name="title_activity_municipios">Elija un Municipio</string>
+    <string name="title_activity_establecimientos_municipio">Establecimientos</string>
+    <string name="title_activity_mapa_establecimientos">Geolocalización</string>
+    <string name="title_activity_info">Información</string>
+
+</resources>

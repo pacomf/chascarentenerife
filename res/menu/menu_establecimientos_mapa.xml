@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+   
+    <item
+        android:id="@+id/gotodirection"
+        android:icon="@android:drawable/ic_menu_directions"
+        android:showAsAction="always"
+        android:title="@string/gotodirection"/>
+    
+    <item
+        android:id="@+id/infoDetails"
+        android:icon="@android:drawable/ic_menu_info_details"
+        android:showAsAction="always"
+        android:title="@string/info"/>
+ 
+</menu>

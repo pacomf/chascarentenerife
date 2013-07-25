@@ -1,0 +1,230 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".Help" >
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            
+            <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:background="@drawable/corner_info_cabecera"
+	            android:id="@+id/itemA" >
+	
+	            <ImageView
+	                android:id="@+id/itemAIcon"
+	                android:layout_width="50dp"
+		        	android:layout_height="50dp"
+		        	android:layout_alignParentTop="true"
+	                android:src="@drawable/alrededor_verde" />
+	
+	            <TextView
+	                android:id="@+id/textItemAHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="15dp"
+	                android:layout_toRightOf="@id/itemAIcon"
+	                android:text="@string/infoItemA"
+	                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="match_parent"
+	            android:background="@drawable/corner_info"
+	            android:id="@+id/item1"
+	            android:layout_marginTop="6dp"
+	            android:layout_below="@id/itemA" >
+	
+	            <ImageView
+	                android:id="@+id/cleanHelp"
+	                android:layout_width="30dp"
+		        	android:layout_height="30dp"
+		        	android:layout_alignParentTop="true"
+	                android:src="@drawable/locator_icon" />
+	
+	            <TextView
+	                android:id="@+id/textCleanHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/cleanHelp"
+	                android:text="@string/infoBotonClean"
+	                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/corner_info"
+	            android:layout_marginTop="4dp"
+	            android:layout_below="@id/item1"
+	            android:id="@+id/item2" >
+	            
+	            <ImageView
+	                android:id="@+id/locationHelp"
+	                android:layout_width="30dp"
+		        	android:layout_height="30dp"
+	                android:layout_alignParentTop="true"
+	                android:src="@android:drawable/ic_menu_mylocation" />
+	
+	            <TextView
+	                android:id="@+id/textLocationHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/locationHelp"
+	                android:text="@string/infoBotonLocation"
+	                android:textSize="16sp" />
+
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/corner_info"
+	            android:layout_marginTop="4dp"
+	            android:layout_below="@id/item2"
+	            android:id="@+id/itemExtra" >
+		
+		            <TextView
+		                android:id="@+id/textItemExtraHelp"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:layout_marginLeft="5dp"
+		                android:text="@string/infoItemAExtra"
+		                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="4dp"
+	            android:background="@drawable/corner_info_cabecera"
+	            android:layout_below="@id/itemExtra"
+	            android:id="@+id/itemB" >
+	        
+		        	<ImageView
+		                android:id="@+id/itemBIcon"
+		                android:layout_width="50dp"
+			        	android:layout_height="50dp"
+			        	android:layout_alignParentTop="true"
+		                android:src="@drawable/municipios_verde" />
+		
+		            <TextView
+		                android:id="@+id/textItemBHelp"
+		                android:layout_width="wrap_content"
+		                android:layout_height="wrap_content"
+		                android:layout_centerVertical="true"
+		                android:layout_marginLeft="5dp"
+		                android:layout_toRightOf="@id/itemBIcon"
+		                android:text="@string/infoItemB"
+		                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/corner_info"
+	            android:layout_marginTop="4dp"
+	            android:layout_below="@id/itemB"
+	            android:id="@+id/item3" >
+	
+	            <ImageView
+	                android:id="@+id/mapHelp"
+	                android:layout_width="30dp"
+		        	android:layout_height="30dp"
+		        	android:layout_alignParentTop="true"
+	                android:src="@android:drawable/ic_menu_mapmode" />
+	
+	            <TextView
+	                android:id="@+id/textMapHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/mapHelp"
+	                android:text="@string/infoBotonMapa"
+	                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/corner_info"
+	            android:layout_marginTop="4dp"
+	            android:layout_below="@id/item3"
+	            android:id="@+id/item4" >
+	
+	            <ImageView
+	                android:id="@+id/viewHelp"
+	                android:layout_width="30dp"
+		        	android:layout_height="30dp"
+		        	android:layout_alignParentTop="true"
+	                android:src="@android:drawable/ic_menu_directions" />
+	
+	            <TextView
+	                android:id="@+id/textViewHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/viewHelp"
+	                android:text="@string/infoBotonDireccion"
+	                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+	        
+	        <RelativeLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/corner_info"
+	            android:layout_marginTop="4dp"
+	            android:layout_below="@id/item4"
+	            android:id="@+id/item5" >
+	
+	            <ImageView
+	                android:id="@+id/infoHelp"
+	                android:layout_width="30dp"
+		        	android:layout_height="30dp"
+		        	android:layout_alignParentTop="true"
+	                android:src="@android:drawable/ic_menu_info_details" />
+	
+	            <TextView
+	                android:id="@+id/textInfoHelp"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_centerVertical="true"
+	                android:layout_marginLeft="5dp"
+	                android:layout_toRightOf="@id/infoHelp"
+	                android:text="@string/infoBotonInfo" 
+	                android:textSize="16sp" />
+	            
+	        </RelativeLayout>
+
+	    </RelativeLayout>
+
+    </ScrollView>
+
+</RelativeLayout>
