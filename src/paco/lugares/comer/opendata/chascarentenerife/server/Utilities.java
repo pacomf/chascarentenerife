@@ -2,6 +2,9 @@ package paco.lugares.comer.opendata.chascarentenerife.server;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.http.client.methods.HttpGet;
 import org.json.JSONArray;
@@ -89,32 +92,50 @@ public class Utilities {
     }
 	
 	public static void comprobarActualizaciones(Context context){
-		
-		if (!Utilities.haveInternet(context)){
-			Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
-			return;
-		}	
-		
-		ProgressDialog pd = ProgressDialog.show(context, context.getResources().getText(R.string.esperar), context.getResources().getText(R.string.comprobar_actualizaciones));
-        pd.setIndeterminate(false);
-        pd.setCancelable(false);
-        
+
         Version encontrado = Entity.query(Version.class).where(eql("zona", "Tenerife")).execute();
 		String version="";
 		if (encontrado == null){
-			Version nuevaVersion = new Version("0", "Tenerife");
-			nuevaVersion.save();
+			encontrado = new Version("0", "Tenerife");
+			encontrado.save();
 			version="0";
 		} else {
 			version=encontrado.version;
 		}
         
+		// Para no consultar siempre al servidor, solo una vez al mes
+		Calendar limite = Calendar.getInstance(); 
+		limite.setTime(new Date()); 
+		limite.add(Calendar.MONTH, -1);
+		
+		Calendar actual = Calendar.getInstance();
+		try {
+		    SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		    actual.setTime(sdf.parse(encontrado.fecha));// all done
+		} catch (Exception e){
+			actual.setTime(new Date());
+		}
+		
 		if (version.equals("0")){
+			ProgressDialog pd = ProgressDialog.show(context, context.getResources().getText(R.string.esperar), context.getResources().getText(R.string.comprobar_actualizaciones));
+	        pd.setIndeterminate(false);
+	        pd.setCancelable(false);
+			
+			
 			RequestSimpleResponse taskResquest = new RequestSimpleResponse();
     		HttpGet get = ServerConnection.getGet(context.getResources().getString(R.string.ip_server), context.getResources().getString(R.string.port_server), "infoDatos/"+"Tenerife");
 			taskResquest.setParams(new ResponseServer_versionDatos_TaskListener(context, pd), ServerConnection.getClient(), get);
 			taskResquest.execute();	
-		} else {
+		} else if (actual.getTime().before(limite.getTime())){
+			if (!Utilities.haveInternet(context)){
+				Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
+				return;
+			}
+			
+			ProgressDialog pd = ProgressDialog.show(context, context.getResources().getText(R.string.esperar), context.getResources().getText(R.string.comprobar_actualizaciones));
+	        pd.setIndeterminate(false);
+	        pd.setCancelable(false);
+			
 			EstablecimientosController.getNuevosDatos(context, "Tenerife", version, pd);
 		}
 	}
@@ -150,6 +171,12 @@ public class Utilities {
 	        	    down.setBuffer(buffer, context, pd, "Tenerife", true);
 	        	    down.execute();
 	    		} else {
+	    			if (!Utilities.haveInternet(context)){
+	    				pd.dismiss();
+	    				Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
+	    				return;
+	    			}
+	    			
 	    			EstablecimientosController.getNuevosDatos(context, "Tenerife", "0", pd);
 	    		}
 	    		

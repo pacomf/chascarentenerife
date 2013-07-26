@@ -5,7 +5,10 @@ import static com.roscopeco.ormdroid.Query.eql;
 import static com.roscopeco.ormdroid.Query.geq;
 import static com.roscopeco.ormdroid.Query.leq;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
@@ -69,6 +72,15 @@ public class EstablecimientosController {
 	        	    DownloadInfo down = new DownloadInfo();
 	        	    down.setBuffer(responseServer, context, pd, zona, false);
 	        	    down.execute();
+        		} else {
+        			Version encontrado = Entity.query(Version.class).where(eql("zona", "Tenerife")).execute();
+		    		if (encontrado != null){
+		    			Calendar c = Calendar.getInstance(); 
+		    			c.setTime(new Date()); 
+		    			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		    			encontrado.fecha = sdf.format(c.getTime());
+		    			encontrado.save();
+		    		}
         		}
 
 			} else {
@@ -97,6 +109,10 @@ public class EstablecimientosController {
 	    			nuevaVersion.save();
 	    		} else {
 	    			encontrado.version = (String)result;
+	    			Calendar c = Calendar.getInstance(); 
+	    			c.setTime(new Date()); 
+	    			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+	    			encontrado.fecha = sdf.format(c.getTime());
 	    			encontrado.save();
 	    		}
 			} else {
@@ -135,6 +151,7 @@ public class EstablecimientosController {
 	        			if (encontrado == null){
 	        				establecimiento.save();
 	        			} else {
+	        				// TODO: Ver si 'borrar y crear' o Actualizar... cuando haya nuevas versiones del fichero.
 	        				encontrado.actualizar(establecimiento.nombre, establecimiento.tipo, establecimiento.direccion, establecimiento.numero, establecimiento.cp, establecimiento.latitud, establecimiento.longitud, establecimiento.municipio, establecimiento.plazas);
 	        				encontrado.save();
 	        			}
@@ -165,6 +182,12 @@ public class EstablecimientosController {
 		        pd.setCancelable(false);
 		        
 		        if (!fich){
+		        	if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(context)){
+	    				pd.dismiss();
+	    				Toast.makeText(context, R.string.no_internet, Toast.LENGTH_LONG).show();
+	    				return;
+	    			}
+
 		        	RequestSimpleResponse taskResquest = new RequestSimpleResponse();
 	        		HttpGet get = ServerConnection.getGet(context.getResources().getString(R.string.ip_server), context.getResources().getString(R.string.port_server), "infoDatos/"+zona);
 					taskResquest.setParams(new ResponseServer_version_TaskListener(context, pd), ServerConnection.getClient(), get);
@@ -176,6 +199,10 @@ public class EstablecimientosController {
 		    			nuevaVersion.save();
 		    		} else {
 		    			encontrado.version = "1";
+		    			Calendar c = Calendar.getInstance(); 
+		    			c.setTime(new Date()); 
+		    			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		    			encontrado.fecha = sdf.format(c.getTime());
 		    			encontrado.save();
 		    		}
 		    		pd.dismiss();

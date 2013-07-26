@@ -3,6 +3,7 @@ package paco.lugares.comer.opendata.chascarentenerife;
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.MenuItem;
+import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -17,6 +18,12 @@ public class Info extends SherlockActivity {
 		setContentView(R.layout.activity_info);
 		ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
+	}
+	
+	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
 	}
 	
 	@Override

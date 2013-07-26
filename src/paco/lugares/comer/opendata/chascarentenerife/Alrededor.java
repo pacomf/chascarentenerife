@@ -93,6 +93,12 @@ public class Alrededor extends SherlockFragmentActivity {
 	}
 	
 	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
+	}
+	
+	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
 		_menu=menu;
         MenuInflater inflater = getSupportMenuInflater();
@@ -280,10 +286,13 @@ public class Alrededor extends SherlockFragmentActivity {
 			    	        	.draggable(true)
 			    	        	.icon(BitmapDescriptorFactory.fromResource(R.drawable.miposicion)));
 			        		
+			        		pd.dismiss();
 			        		pintarMarkers(Long.parseLong(String.format("%.7f",  lat).replace(",", "")), Long.parseLong(String.format("%.7f",  lng).replace(",", "")));
 							
-						} catch (Exception e) {}
-				    	pd.dismiss();
+						} catch (Exception e) {
+							pd.dismiss();
+						}
+				    	
 				    }
 				};
 				pd = ProgressDialog.show(v.getContext(), getResources().getText(R.string.procesando), getResources().getText(R.string.location));

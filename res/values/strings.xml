@@ -4,8 +4,8 @@
     <string name="app_name">Chascar en Tenerife</string>
     <!-- TODO: Cambiar la KEY para la API de Google Place y la Web o IP y el PORT del BackEnd, donde lo tengamos desplegado -->
     <string name="key_api_place">KEY</string>
-    <string name="ip_server">WEB</string>
-    <string name="port_server">PORT</string>
+    <string name="ip_server">IPSERVER</string>
+    <string name="port_server">PORTSERVER</string>
     <string name="milocalizacion">Mi localización</string>
     <string name="ficheroinicial">datos_version_uno.json</string>
     <string name="procesando">Procesando...</string>

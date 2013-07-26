@@ -14,6 +14,7 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.roscopeco.ormdroid.Entity;
+import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -92,6 +93,12 @@ public class EstablecimientosMunicipio extends SherlockActivity {
         inflater.inflate(R.menu.menu_establecimientos_municipio, menu);
         return true;
     }
+	
+	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
+	}
  
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

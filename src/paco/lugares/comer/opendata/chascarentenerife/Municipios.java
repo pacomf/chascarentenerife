@@ -7,6 +7,7 @@ import com.actionbarsherlock.app.SherlockActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -31,6 +32,12 @@ public class Municipios extends SherlockActivity {
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
 		
 		initLista();
+	}
+	
+	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
 	}
 	
 	@Override

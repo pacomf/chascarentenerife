@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.roscopeco.ormdroid.Entity;
+import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.location.Location;
 import android.net.Uri;
@@ -69,6 +70,12 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 			initMapaUno();
 		initClickMarker();
 		
+	}
+	
+	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
 	}
 	
 	@Override

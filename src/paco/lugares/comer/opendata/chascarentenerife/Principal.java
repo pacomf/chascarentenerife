@@ -9,6 +9,7 @@ import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
 import com.roscopeco.ormdroid.ORMDroidApplication;
 
+import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.server.Utilities;
 
 import android.content.Intent;
@@ -44,6 +45,12 @@ public class Principal extends SherlockFragmentActivity {
 		initBotonAlrededor();
 		initBotonMunicipios();
 
+	}
+	
+	@Override
+	public void onResume() { 
+	    super.onResume(); 
+	    ORMDroidApplication.initialize(this);
 	}
 	
 	@Override
