@@ -2,12 +2,15 @@ package paco.lugares.comer.opendata.chascarentenerife;
 
 import static com.roscopeco.ormdroid.Query.eql;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation.LocationResult;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
@@ -43,6 +46,7 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 	private Context ctx;
 	Menu _menu = null;
 	private TextView nombreMunicipio;
+	Map <Marker, String> marcadorId = new HashMap<Marker, String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -115,9 +119,23 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 				myLocation.getLocation(ctx, locationResult);
         	}
         	return true;
-        } else if (item.getItemId() == R.id.infoDetails) {
-        	Intent myIntent = new Intent(this, Info.class);
-            startActivity(myIntent);
+        } else if (item.getItemId() == R.id.valoraciones) {
+        	String idserver = marcadorId.get(marcador);
+        	if(idserver != null){
+        		Establecimiento establecimiento = Entity.query(Establecimiento.class).where(eql("idserver", idserver)).execute();
+	        	if (establecimiento != null){
+		        	Intent myIntent = new Intent(this, ComentariosEstablecimiento.class);
+		        	myIntent.putExtra("idserver", establecimiento.idserver);
+		        	myIntent.putExtra("nombre", establecimiento.nombre);
+		        	myIntent.putExtra("tipo", establecimiento.tipo);
+		        	myIntent.putExtra("direccion", establecimiento.direccion);
+		        	
+		        	ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", establecimiento.idserver)).execute();
+					myIntent.putExtra("media", ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : getResources().getString(R.string.valor_defecto)));
+					myIntent.putExtra("precio", (vE != null) ? vE.precio : "0");
+		            startActivity(myIntent);
+	        	}
+        	}
         	return true;
         }
         return false;
@@ -156,12 +174,24 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 		Long longitud=bundle.getLong("longitud");
 		String tipo=bundle.getString("tipo");
 		String nombre=bundle.getString("nombre");
+		String media=bundle.getString("media");
+		String precio=bundle.getString("precio");
+		String idserver=bundle.getString("idserver");
 		
 		if ((latitud != null) && (longitud != null)){
-			mapa.addMarker(new MarkerOptions()
+			String subtitle = "";
+			if (media.equals(getResources().getString(R.string.valor_defecto))){
+				subtitle = getResources().getString(R.string.sinvaloraciones);
+			} else {
+				subtitle+=media+" | "+Utilities.getPrecioStr(this, precio);
+			}
+			Marker m = mapa.addMarker(new MarkerOptions()
         	.position(new LatLng(Double.valueOf(latitud)/10000000, Double.valueOf(longitud)/10000000))
         	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(tipo+" "+nombre))
+        	.snippet(subtitle)
         	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(this,  tipo))));
+			
+			marcadorId.put(m, idserver);
 			
 			LatLng go = new LatLng(Double.valueOf(latitud)/10000000, Double.valueOf(longitud)/10000000);
     		CameraPosition camPos = new CameraPosition.Builder()
@@ -200,10 +230,23 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 			// Insertamos el Marcador
 			Double latitud = Double.valueOf(es.latitud)/10000000;
 			Double longitud = Double.valueOf(es.longitud)/10000000;
-    		mapa.addMarker(new MarkerOptions()
+			ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", es.idserver)).execute();
+			String subtitle = "";
+			if (vE != null){
+				if ((vE.media.equals(getResources().getString(R.string.valor_defecto))) || (vE.media.equals("0"))){
+					subtitle = getResources().getString(R.string.sinvaloraciones);
+				} else {
+					subtitle+=vE.media+" | "+Utilities.getPrecioStr(this, vE.precio);
+				}
+			} else{
+				subtitle = getResources().getString(R.string.sinvaloraciones);
+			}
+    		Marker m = mapa.addMarker(new MarkerOptions()
 	        	.position(new LatLng(latitud, longitud))
 	        	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(es.tipo+" "+es.nombre))
+	        	.snippet(subtitle)
 	        	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(this,  es.tipo))));
+    		marcadorId.put(m, es.idserver);
 		}
 		if (establecimientos.size()>0)
 			moverMapaCenter(Double.valueOf(establecimientos.get(0).latitud)/10000000, Double.valueOf(establecimientos.get(0).longitud)/10000000, 12);

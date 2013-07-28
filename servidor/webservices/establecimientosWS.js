@@ -1,6 +1,7 @@
 module.exports = function(app){  
 
     var Establecimiento = require('../models/establecimiento');
+    var Comentario = require('../models/comentario');
     var InfoDatos = require('../models/info');
   
     //find establecimientos por municipios
@@ -56,13 +57,34 @@ module.exports = function(app){
         });
     };
 
+    listEstablecimientosGeoMunicipio = function(req, res) {  
+        Establecimiento.find({$and: [{latitud: {$ne: "0"}}, {municipio: replaceAll(req.params.municipio, "_", " ")}]}, function(error, establecimientos) {
+            res.send(establecimientos);  
+        });
+    };
+
+    function replaceAll( text, busca, reemplaza ){
+      while (text.toString().indexOf(busca) != -1)
+          text = text.toString().replace(busca,reemplaza);
+      return text;
+    }
+
+    listComentariosEstablecimiento = function(req, res) {  
+        Comentario.find({idestablecimiento: req.params.establecimiento}).sort({fecha:1}).limit(10).exec(function(error, comentarios) {
+            res.send(comentarios);  
+        });
+    };
+
+
     app.get('/actualizarDatosGeo/:zona/:version', actualizarDatosGeo);
     app.get('/infoDatos/:zona', version);  
 
     app.get('/establecimientosLoc/:municipio', listEstablecimientosMunicipios); 
     app.get('/establecimientosTipo/:tipo', listEstablecimientosTipo); 
     app.get('/establecimientosGeo', listEstablecimientosGeo);
-    app.get('/establecimientosNoGeo', listEstablecimientosNoGeo); 
+    app.get('/establecimientosGeo/:municipio', listEstablecimientosGeoMunicipio);
+    app.get('/establecimientosNoGeo', listEstablecimientosNoGeo);
     app.get('/establecimientosArea/:latmin/:latmax/:lngmin/:lngmax', listEstablecimientosArea); 
 
+    app.get('/comentarios/:establecimiento', listComentariosEstablecimiento); 
 } 

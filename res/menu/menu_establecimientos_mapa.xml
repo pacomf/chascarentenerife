@@ -8,9 +8,9 @@
         android:title="@string/gotodirection"/>
     
     <item
-        android:id="@+id/infoDetails"
+        android:id="@+id/valoraciones"
         android:icon="@android:drawable/ic_menu_info_details"
         android:showAsAction="always"
-        android:title="@string/info"/>
+        android:title="@string/valoraciones"/>
  
 </menu>

@@ -5,9 +5,10 @@
     <!-- TODO: Cambiar la KEY para la API de Google Place y la Web o IP y el PORT del BackEnd, donde lo tengamos desplegado -->
     <string name="key_api_place">KEY</string>
     <string name="ip_server">IPSERVER</string>
-    <string name="port_server">PORTSERVER</string>
+    <string name="port_server">PORT</string>
     <string name="milocalizacion">Mi localización</string>
     <string name="ficheroinicial">datos_version_uno.json</string>
+    <string name="valor_defecto">-,-</string>
     <string name="procesando">Procesando...</string>
     <string name="location">Espere mientras se determina su ubicación actual. Se recomienda habilitar el GPS.</string>
     <string name="descargando">Procesando los Nuevos Datos</string>
@@ -26,17 +27,29 @@
     <string name="enmapa">Ver en el mapa</string>
     <string name="info">Informacion</string>
     <string name="placeholder">Introduzca una dirección...</string>
-    
+    <string name="sinvaloraciones">Sin valoraciones</string>
+    <string name="valoraciones">Valoraciones</string>
+    <string name="recomendaciones">Recomendaciones:</string>
+    <string name="opinion">Opinión:</string>
+    <string name="cargando_comentarios">Cargando Comentarios...</string>
+
+    <!-- Precios Establecimientos -->
+    <string name="sinprecio">- €</string>
+    <string name="barato">Menos de 10 €</string>
+    <string name="normal">Entre 10 y 15 €</string>
+    <string name="carillo">Entre 15 y 20 €</string>
+    <string name="caro">Más de 20 €</string>
+
     <!-- Info -->
     <string name="infoBotonLocation">Pulsando sobre este icono se calculará nuestra posición actual y se visualiarán en el mapa todos los establecimientos cercanos a nosotros en ese instante.</string>
     <string name="infoBotonClean">Pulsando sobre este icono se resetearán todos los datos de búsqueda, tanto la dirección como los marcadores que hubiera en el mapa.</string>
     <string name="infoBotonMapa">Pulsando sobre este icono mostrará toda la lista de los establecimientos del municipio en el mapa.</string>
     <string name="infoBotonDireccion">Pulsando sobre este icono se calculará la ruta, desde nuestra posición actual, para llegar al establecimiento que estaba seleccionado en el mapa.</string>
     <string name="infoBotonInfo">Pulsando sobre este icono accedemos a la información de la aplicación. Esta página.</string>
-	<string name="infoItemA">Esta opción permite la geolocalización de los establecimientos cercanos a un punto.</string>
-	<string name="infoItemAExtra">El punto de referencia para buscar establecimientos cercanos, puede ser nuestra propia localización en ese instante, o puede ser una dirección que introduciremos en el campo de texto mediante ayuda de las opciones de autocompletado que nos irá sugiriendo la propia aplicación. También podemos interactuar directamente con el mapa. Con un click prolongado situaremos la posición desde la que se calculará los establecimientos cercanos, y podremos jugar con esa posición, arrastrando el marcador por el mapa para moverlo de ubicación.</string>
+    <string name="infoItemA">Esta opción permite la geolocalización de los establecimientos cercanos a un punto.</string>
+    <string name="infoItemAExtra">El punto de referencia para buscar establecimientos cercanos, puede ser nuestra propia localización en ese instante, o puede ser una dirección que introduciremos en el campo de texto mediante ayuda de las opciones de autocompletado que nos irá sugiriendo la propia aplicación. También podemos interactuar directamente con el mapa. Con un click prolongado situaremos la posición desde la que se calculará los establecimientos cercanos, y podremos jugar con esa posición, arrastrando el marcador por el mapa para moverlo de ubicación.</string>
     <string name="infoItemB">Esta opción nos permitirá mostrar los establecimientos de un municipio determinado.</string>
-    
+
     <!-- Muncipios 10.213.3.139 -->
     <string name="adeje">Adeje</string>
     <string name="arafo">Arafo</string>
@@ -156,5 +169,6 @@
     <string name="title_activity_establecimientos_municipio">Establecimientos</string>
     <string name="title_activity_mapa_establecimientos">Geolocalización</string>
     <string name="title_activity_info">Información</string>
+    <string name="title_activity_comentarios_establecimiento">ComentariosEstablecimiento</string>
 
 </resources>

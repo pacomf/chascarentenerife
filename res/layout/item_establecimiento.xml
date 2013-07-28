@@ -13,13 +13,28 @@
         android:src="@drawable/restaurante" />
     
     <TextView
+        android:id="@+id/media"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/icon"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@+id/direccion"
+        android:paddingLeft="10dp"
+        android:singleLine="true"
+        android:textColor="#AAAAAA" 
+        android:text="@string/valor_defecto"
+        android:layout_marginBottom="3dp"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+    <TextView
         android:id="@+id/nombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/icon"
         android:paddingLeft="10dp"
         android:layout_marginTop="7dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@+id/precioColor"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:singleLine="true"/>
     
@@ -30,11 +45,27 @@
         android:layout_toRightOf="@id/icon"
         android:paddingLeft="10dp"
         android:paddingBottom="5dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_toLeftOf="@+id/precioColor"
         android:layout_below="@+id/nombre"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#777777" />
-
-
+    
+    <View
+        android:id="@+id/limite"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_below="@+id/media"/>
+	        
+    <View
+        android:id="@+id/precioColor"
+        android:layout_width="4dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/limite"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="3dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="#DDDDDD" />
 
 </RelativeLayout>

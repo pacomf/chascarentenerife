@@ -4,9 +4,19 @@ import static com.roscopeco.ormdroid.Query.eql;
 
 import java.util.List;
 
+import org.apache.http.client.methods.HttpGet;
+import org.json.JSONArray;
+
 import paco.lugares.comer.opendata.chascarentenerife.adapters.EstablecimientoAdapter;
+import paco.lugares.comer.opendata.chascarentenerife.controllers.EstablecimientosController;
 import paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.JSONToModel;
+import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.server.IStandardTaskListener;
+import paco.lugares.comer.opendata.chascarentenerife.server.RequestArrayJSONResponse;
+import paco.lugares.comer.opendata.chascarentenerife.server.RequestSimpleResponse;
+import paco.lugares.comer.opendata.chascarentenerife.server.ServerConnection;
 
 import com.actionbarsherlock.app.ActionBar;
 import com.actionbarsherlock.app.SherlockActivity;
@@ -18,6 +28,8 @@ import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
@@ -32,6 +44,7 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 	TextView municipioNombre;
 	ImageView municipioIcono;
 	List<Establecimiento> establecimientos = null;
+	ProgressDialog pd = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,17 +54,17 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 		ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
 		
-		initLista(this);
-	}
-	
-	private void initLista(Activity activity){
-		
-		Bundle bundle = getIntent().getExtras();
+        Bundle bundle = getIntent().getExtras();
 		String municipio=bundle.getString("municipio");
 
 		if (municipio == null)
 			return;
-		
+        
+		actualizarValoracion(this, municipio);
+	}
+	
+	private void initLista(Activity activity, String municipio){
+
 		listView1 = (ListView) findViewById(R.id.lista_establecimientos);
 		municipioNombre = (TextView) findViewById(R.id.nombre);
 		municipioIcono = (ImageView) findViewById(R.id.municipio);
@@ -77,14 +90,73 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 					myIntent.putExtra("latitud", establecimiento.latitud);
 					myIntent.putExtra("longitud", establecimiento.longitud);
 					myIntent.putExtra("tipo", establecimiento.tipo);
+					myIntent.putExtra("idserver", establecimiento.idserver);
 					myIntent.putExtra("nombre", establecimiento.nombre);
 					myIntent.putExtra("municipio", municipio);
+					ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", establecimiento.idserver)).execute();
+					myIntent.putExtra("media", ((vE.media != null && (!vE.media.equals("0"))) ? vE.media : view.getContext().getResources().getString(R.string.valor_defecto)));
+					myIntent.putExtra("precio", vE.precio);
 	        		startActivity(myIntent);
 				}
 			}
 	    	
 	    });
+        
+        if (pd != null)
+        	pd.dismiss();
 
+	}
+	
+	private void actualizarValoracion(Activity activity, String municipio){
+		pd = ProgressDialog.show(this, getResources().getText(R.string.esperar), getResources().getText(R.string.comprobar_actualizaciones));
+        pd.setIndeterminate(false);
+        pd.setCancelable(true);
+		
+        if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(this)){
+			Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+			initLista(activity, municipio);
+		} else {
+			RequestArrayJSONResponse taskResquest = new RequestArrayJSONResponse();
+			HttpGet get = ServerConnection.getGet(getResources().getString(R.string.ip_server), getResources().getString(R.string.port_server), "establecimientosGeo/"+municipio.replaceAll(" ", "_"));
+			taskResquest.setParams(new ResponseServer_valoraciones_TaskListener(this, pd, municipio, activity), ServerConnection.getClient(), get);
+			taskResquest.execute();	
+		}
+	}
+	
+	private class ResponseServer_valoraciones_TaskListener implements IStandardTaskListener {
+	    
+		Context context;
+		ProgressDialog pd;
+		String municipio;
+		Activity activity;
+		
+	    public ResponseServer_valoraciones_TaskListener(Context context, ProgressDialog pd, String municipio, Activity activity) {
+	    	this.context = context;
+	    	this.pd = pd;
+	    	this.municipio = municipio;
+	    	this.activity = activity;
+	    }
+	    
+	    @Override
+	    public void taskComplete(Object result) {
+	    	if (result != null){
+	    		JSONArray responseServer = (JSONArray) result;
+	    		for(int i=0; i<responseServer.length(); i++){
+	        		try {
+	        			ValoracionEstablecimiento vE = JSONToModel.toValoracionEstablecimientoModel(context, responseServer.getJSONObject(i));
+	        			ValoracionEstablecimiento vEbusqueda = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", vE.idserver)).execute();
+	        			if (vEbusqueda == null){
+	        				vE.save();
+	        			} else {
+	        				vEbusqueda.media = (vE.media != null) ? vE.media : vEbusqueda.media;
+	        				vEbusqueda.precio = (vE.precio != null) ? vE.precio : vEbusqueda.precio;
+	        				vEbusqueda.save();
+	        			}
+	        		} catch (Exception e){}
+	    		}
+			}
+			initLista(activity, municipio);
+	    }
 	}
 	
 	@Override

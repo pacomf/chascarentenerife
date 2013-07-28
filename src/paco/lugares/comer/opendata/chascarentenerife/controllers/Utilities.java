@@ -273,5 +273,21 @@ public class Utilities {
 			return R.drawable.laorotava;
 		}
 	}
+	
+	public static String getPrecioStr(Context ctx, String precio){
+		if (precio == null)
+			return ctx.getResources().getString(R.string.sinprecio);
+		else if (precio.equals("1")){
+			return ctx.getResources().getString(R.string.barato);
+		} else if (precio.equals("2")){
+			return ctx.getResources().getString(R.string.normal);
+		} else if (precio.equals("3")){
+			return ctx.getResources().getString(R.string.carillo);
+		} else if (precio.equals("4")){
+			return ctx.getResources().getString(R.string.caro);
+		} else {
+			return ctx.getResources().getString(R.string.sinprecio);
+		}
+	}
 
 }

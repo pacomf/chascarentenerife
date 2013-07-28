@@ -11,7 +11,9 @@ var establecimientoSchema = new Schema({
     latitud: String, 
     longitud: String, 
     municipio: String, 
-    plazas: Number
+    plazas: Number,
+    media: { type: Number, default: 0 },
+    precio: { type: String, default: "0" }
 });  
   
 //Export the schema  

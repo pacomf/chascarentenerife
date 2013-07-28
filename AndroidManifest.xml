@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="paco.lugares.comer.opendata.chascarentenerife"
-    android:versionCode="2"
-    android:versionName="1.0.1" >
+    android:versionCode="3"
+    android:versionName="1.0.2" >
 
     <uses-sdk
-        android:minSdkVersion="8"
+        android:minSdkVersion="11"
         android:targetSdkVersion="17" />
 
     <application
@@ -58,6 +58,10 @@
         <activity
             android:name="paco.lugares.comer.opendata.chascarentenerife.Info"
             android:label="@string/title_activity_info" >
+        </activity>
+        <activity
+            android:name="paco.lugares.comer.opendata.chascarentenerife.ComentariosEstablecimiento"
+            android:label="@string/title_activity_comentarios_establecimiento" >
         </activity>
     </application>
 

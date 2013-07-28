@@ -19,6 +19,7 @@ import com.roscopeco.ormdroid.Entity;
 import paco.lugares.comer.opendata.chascarentenerife.R;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.models.JSONToModel;
+import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.models.Version;
 import paco.lugares.comer.opendata.chascarentenerife.server.IStandardTaskListener;
 import paco.lugares.comer.opendata.chascarentenerife.server.RequestArrayJSONResponse;
@@ -152,7 +153,10 @@ public class EstablecimientosController {
 	        				establecimiento.save();
 	        			} else {
 	        				// TODO: Ver si 'borrar y crear' o Actualizar... cuando haya nuevas versiones del fichero.
-	        				encontrado.actualizar(establecimiento.nombre, establecimiento.tipo, establecimiento.direccion, establecimiento.numero, establecimiento.cp, establecimiento.latitud, establecimiento.longitud, establecimiento.municipio, establecimiento.plazas);
+	        				ValoracionEstablecimiento ve = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", encontrado.idserver)).execute();
+	        				String media = (ve != null) ? ve.media : null;
+	        				String precio = (ve != null) ? ve.precio : null;
+	        				encontrado.actualizar(establecimiento.nombre, establecimiento.tipo, establecimiento.direccion, establecimiento.numero, establecimiento.cp, establecimiento.latitud, establecimiento.longitud, establecimiento.municipio, establecimiento.plazas, media, precio);
 	        				encontrado.save();
 	        			}
 	        			porcentaje=(int)((i*100)/buffer.length());

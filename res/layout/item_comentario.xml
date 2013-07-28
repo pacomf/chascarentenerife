@@ -1,0 +1,130 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_listview">
+
+    <RelativeLayout 
+	        android:id="@+id/valoracion"
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginTop="10dp">
+	    	
+	        <ImageView
+		        android:id="@+id/v1"
+		        android:layout_width="22dp"
+		        android:layout_height="22dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:src="@drawable/ic_launcher" />
+	        <ImageView
+		        android:id="@+id/v2"
+		        android:layout_width="22dp"
+		        android:layout_height="22dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v1"
+		        android:src="@drawable/ic_launcher" />
+	        <ImageView
+		        android:id="@+id/v3"
+		        android:layout_width="22dp"
+		        android:layout_height="22dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v2"
+		        android:src="@drawable/ic_launcher" />
+	        <ImageView
+		        android:id="@+id/v4"
+		        android:layout_width="22dp"
+		        android:layout_height="22dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v3"
+		        android:src="@drawable/ic_launcher" />
+	        <ImageView
+		        android:id="@+id/v5"
+		        android:layout_width="22dp"
+		        android:layout_height="22dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v4"
+		        android:src="@drawable/ic_launcher" />
+
+	    </RelativeLayout>
+	    
+    	<TextView
+	        android:id="@+id/precio"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/valoracion"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginTop="20dp"
+	        android:textColor="#777777"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:singleLine="true"/>
+    	
+    	<TextView
+	        android:id="@+id/usuario"
+	        android:layout_width="160dp"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/valoracion"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginTop="10dp"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:singleLine="true"/>
+    	
+    	<TextView
+	        android:id="@+id/fecha"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/usuario"
+	        android:layout_below="@id/valoracion"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginTop="12dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:singleLine="true"/>
+    	
+    	<TextView
+	        android:id="@+id/recomendacionTitle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/usuario"
+	        android:layout_marginLeft="10dp"
+	        android:text="@string/recomendaciones"
+	        android:layout_marginTop="12dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:singleLine="true"/>
+    	
+    	<TextView
+	        android:id="@+id/recomendacion"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/recomendacionTitle"
+	        android:layout_marginLeft="12dp"
+	        android:textColor="#666666"
+	        android:layout_marginTop="4dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+    	
+    	<TextView
+	        android:id="@+id/opinionTitle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/recomendacion"
+	        android:layout_marginLeft="10dp"
+	        android:text="@string/opinion"
+	        android:layout_marginTop="12dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:singleLine="true"/>
+    	
+    	<TextView
+	        android:id="@+id/opinion"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/opinionTitle"
+	        android:layout_marginLeft="12dp"
+	        android:textColor="#666666"
+	        android:layout_marginTop="4dp"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:layout_marginBottom="5dp" />
+
+</RelativeLayout>

@@ -7,9 +7,11 @@ import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuInflater;
 import com.actionbarsherlock.view.MenuItem;
+import com.roscopeco.ormdroid.Entity;
 import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.server.Utilities;
 
 import android.content.Intent;
