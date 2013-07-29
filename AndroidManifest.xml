@@ -65,7 +65,9 @@
         </activity>
         <activity
             android:name="paco.lugares.comer.opendata.chascarentenerife.NuevoComentario"
-            android:label="@string/title_activity_nuevo_comentario" >
+            android:label="@string/title_activity_nuevo_comentario"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" >
         </activity>
     </application>
 

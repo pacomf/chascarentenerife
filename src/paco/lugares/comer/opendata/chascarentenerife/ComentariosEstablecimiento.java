@@ -80,6 +80,7 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 		v4 = (ImageView) findViewById(R.id.v4);
 		v5 = (ImageView) findViewById(R.id.v5);
 		
+		System.out.println(mediaStr);
 		setValoracionCabecera (v1, v2, v3, v4, v5, mediaStr);
 		
 		nombre.setText(Utilities.getCamelCase(nombreStr));
@@ -124,14 +125,14 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 		  } else if ((valoracion >= 1.5) && (valoracion < 2)) {
 			  v1.setImageResource(R.drawable.ic_launcher);
 			  v2.setImageResource(R.drawable.starhalf);
-		  } else if ((valoracion > 2) && (valoracion < 2.5)) {
+		  } else if ((valoracion >= 2) && (valoracion < 2.5)) {
 			  v1.setImageResource(R.drawable.ic_launcher);
 			  v2.setImageResource(R.drawable.ic_launcher);
 		  } else if ((valoracion >= 2.5) && (valoracion < 3)) {
 			  v1.setImageResource(R.drawable.ic_launcher);
 			  v2.setImageResource(R.drawable.ic_launcher);
 			  v3.setImageResource(R.drawable.starhalf);
-		  } else if ((valoracion > 3) && (valoracion < 3.5)) {
+		  } else if ((valoracion >= 3) && (valoracion < 3.5)) {
 			  v1.setImageResource(R.drawable.ic_launcher);
 			  v2.setImageResource(R.drawable.ic_launcher);
 			  v3.setImageResource(R.drawable.ic_launcher);
@@ -140,7 +141,7 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 			  v2.setImageResource(R.drawable.ic_launcher);
 			  v3.setImageResource(R.drawable.ic_launcher);
 			  v4.setImageResource(R.drawable.starhalf);
-		  } else if ((valoracion > 4) && (valoracion < 4.5)) {
+		  } else if ((valoracion >= 4) && (valoracion < 4.5)) {
 			  v1.setImageResource(R.drawable.ic_launcher);
 			  v2.setImageResource(R.drawable.ic_launcher);
 			  v3.setImageResource(R.drawable.ic_launcher);

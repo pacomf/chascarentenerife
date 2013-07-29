@@ -9,7 +9,7 @@
     
     <item
         android:id="@+id/valoraciones"
-        android:icon="@android:drawable/ic_menu_info_details"
+        android:icon="@drawable/ic_menu_start_conversation"
         android:showAsAction="always"
         android:title="@string/valoraciones"/>
  

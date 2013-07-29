@@ -149,6 +149,8 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 	        			JSONToModel.toValoracionEstablecimientoModel(context, responseServer.getJSONObject(i));
 	        		} catch (Exception e){}
 	    		}
+			} else{
+				ValoracionEstablecimiento.valoracion = new HashMap<String, Valoracion>();
 			}
 			initLista(activity, municipio);
 	    }

@@ -209,6 +209,11 @@ public class NuevoComentario extends SherlockActivity {
         	
         	if (comprobarCampos()){
         		if (idserver != null){
+        			if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(this)){
+        				Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+        				return false;
+        			}
+        			
 	        		ProgressDialog pd = ProgressDialog.show(this, getResources().getText(R.string.esperar), getResources().getText(R.string.enviando_comentario));
 	                pd.setIndeterminate(false);
 	                pd.setCancelable(true);
@@ -268,6 +273,7 @@ public class NuevoComentario extends SherlockActivity {
 	    		}
 			} else {
 				pd.dismiss();
+				Toast.makeText(context, R.string.fall_comentario, Toast.LENGTH_LONG).show();
 			}
 	    }
 	}

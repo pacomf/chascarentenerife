@@ -121,6 +121,10 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
         	}
         	return true;
         } else if (item.getItemId() == R.id.valoraciones) {
+        	if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(this)){
+				Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+				return false;
+			}
         	String idserver = marcadorId.get(marcador);
         	if(idserver != null){
         		Establecimiento establecimiento = Entity.query(Establecimiento.class).where(eql("idserver", idserver)).execute();
@@ -136,6 +140,10 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 		            startActivity(myIntent);
 	        	}
         	}
+        	return true;
+        } else if (item.getItemId() == R.id.infoDetails) {
+        	Intent myIntent = new Intent(this, Info.class);
+            startActivity(myIntent);
         	return true;
         }
         return false;

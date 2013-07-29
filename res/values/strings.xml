@@ -35,7 +35,7 @@
     <string name="opinion">Opinión:</string>
     <string name="cargando_comentarios">Cargando Comentarios...</string>
     
-    <string name="nohaycomentarios">No existen comentarios. ¡Sé el primero en Comentar!</string>
+    <string name="nohaycomentarios">No existen comentarios. \n¡Sé el primero en Comentar!</string>
 
     <string name="faltanombre">Es necesario que indique su nombre</string>
     <string name="faltavaloracion">Es necesario que indique una valoración</string>
@@ -187,7 +187,7 @@
     <string name="title_activity_establecimientos_municipio">Establecimientos</string>
     <string name="title_activity_mapa_establecimientos">Geolocalización</string>
     <string name="title_activity_info">Información</string>
-    <string name="title_activity_comentarios_establecimiento">ComentariosEstablecimiento</string>
-    <string name="title_activity_nuevo_comentario">NuevoComentario</string>
+    <string name="title_activity_comentarios_establecimiento">Comentarios</string>
+    <string name="title_activity_nuevo_comentario">Nuevo Comentario</string>
 
 </resources>

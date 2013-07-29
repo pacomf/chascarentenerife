@@ -75,7 +75,6 @@ public class ComentarioAdapter extends BaseAdapter {
 	    precio.setText(Utilities.getPrecioStr(vi.getContext(), item.precio));
  
 	    TextView fecha = (TextView) vi.findViewById(R.id.fecha);
-	    System.out.println(item.fecha);
 	    try{
 		    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(item.fecha.split("T")[0]);
 		    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -88,10 +87,16 @@ public class ComentarioAdapter extends BaseAdapter {
 	    usuario.setText(item.usuario);
 	    
 	    TextView recomendacion = (TextView) vi.findViewById(R.id.recomendacion);
-	    recomendacion.setText(item.recomendacion);
+	    if (item.recomendacion.trim().equals(""))
+	    	recomendacion.setText("-");
+	    else
+	    	recomendacion.setText(item.recomendacion);
 	    
 	    TextView opinion = (TextView) vi.findViewById(R.id.opinion);
-	    opinion.setText(item.opinion);
+	    if (item.opinion.trim().equals(""))
+	    	opinion.setText("-");
+	    else
+	    	opinion.setText(item.opinion);
 
 	    return vi;
 	  }
