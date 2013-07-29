@@ -3,7 +3,9 @@ package paco.lugares.comer.opendata.chascarentenerife.adapters;
 
 import static com.roscopeco.ormdroid.Query.eql;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.roscopeco.ormdroid.Entity;
@@ -18,6 +20,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,7 +75,14 @@ public class ComentarioAdapter extends BaseAdapter {
 	    precio.setText(Utilities.getPrecioStr(vi.getContext(), item.precio));
  
 	    TextView fecha = (TextView) vi.findViewById(R.id.fecha);
-	    fecha.setText(item.fecha);
+	    System.out.println(item.fecha);
+	    try{
+		    Date date = new SimpleDateFormat("yyyy-MM-dd").parse(item.fecha.split("T")[0]);
+		    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+		    fecha.setText(df.format(date));
+	    } catch (Exception e){
+	    	fecha.setText("");
+	    }
 	    
 	    TextView usuario = (TextView) vi.findViewById(R.id.usuario);
 	    usuario.setText(item.usuario);
@@ -88,7 +98,28 @@ public class ComentarioAdapter extends BaseAdapter {
 	  
 	  // TODO: Completar esta funcion
 	  private void setValoracion(ImageView v1, ImageView v2, ImageView v3, ImageView v4, ImageView v5, String valoracion){
-		  
+		  int val = Integer.valueOf(valoracion);
+		  if (val == 1){
+			  v1.setImageResource(R.drawable.ic_launcher);
+		  } else if (val == 2) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+		  } else if (val == 3) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+		  } else if (val == 4) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.ic_launcher);
+		  } else if (val ==  5){
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.ic_launcher);
+			  v5.setImageResource(R.drawable.ic_launcher);
+		  }
 	  }
 
 }

@@ -4,11 +4,13 @@
     <string name="app_name">Chascar en Tenerife</string>
     <!-- TODO: Cambiar la KEY para la API de Google Place y la Web o IP y el PORT del BackEnd, donde lo tengamos desplegado -->
     <string name="key_api_place">KEY</string>
-    <string name="ip_server">IPSERVER</string>
+    <string name="ip_server">IP</string>
     <string name="port_server">PORT</string>
     <string name="milocalizacion">Mi localización</string>
     <string name="ficheroinicial">datos_version_uno.json</string>
-    <string name="valor_defecto">-,-</string>
+    <string name="valor_defecto"></string>
+    <string name="nuevo_comentario">Nuevo Comentario</string>
+    <string name="guardar">Guardar</string>
     <string name="procesando">Procesando...</string>
     <string name="location">Espere mientras se determina su ubicación actual. Se recomienda habilitar el GPS.</string>
     <string name="descargando">Procesando los Nuevos Datos</string>
@@ -32,9 +34,25 @@
     <string name="recomendaciones">Recomendaciones:</string>
     <string name="opinion">Opinión:</string>
     <string name="cargando_comentarios">Cargando Comentarios...</string>
+    
+    <string name="nohaycomentarios">No existen comentarios. ¡Sé el primero en Comentar!</string>
 
+    <string name="faltanombre">Es necesario que indique su nombre</string>
+    <string name="faltavaloracion">Es necesario que indique una valoración</string>
+    
+    <string name="enviando_comentario">Enviado su comentario...</string>
+    <string name="fall_comentario">No se pudo enviar correctamente su comentario. Vuelva a intentarlo ahora o más tarde.</string>
+    <string name="guardado_comentario">El comentario ha sido publicado con éxito. Gracias por su colaboración</string> 
+    
+    
+    <string name="valoracion">Valoración*</string>
+    <string name="precio">Precio*</string>
+    <string name="nombre_usuario">Tu nombre*</string>
+    <string name="recomendacion">Recomendable pedir...</string>
+    <string name="opinion">Opinión</string>
+    
     <!-- Precios Establecimientos -->
-    <string name="sinprecio">- €</string>
+    <string name="sinprecio"> </string>
     <string name="barato">Menos de 10 €</string>
     <string name="normal">Entre 10 y 15 €</string>
     <string name="carillo">Entre 15 y 20 €</string>
@@ -170,5 +188,6 @@
     <string name="title_activity_mapa_establecimientos">Geolocalización</string>
     <string name="title_activity_info">Información</string>
     <string name="title_activity_comentarios_establecimiento">ComentariosEstablecimiento</string>
+    <string name="title_activity_nuevo_comentario">NuevoComentario</string>
 
 </resources>

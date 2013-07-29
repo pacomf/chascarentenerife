@@ -1,0 +1,194 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="10dp"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="10dp"
+    tools:context=".NuevoComentario" >
+
+    <RelativeLayout 
+        android:id="@+id/cabecera"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content">
+    	
+    	<ImageView
+	        android:id="@+id/icon"
+	        android:layout_width="32dp"
+	        android:layout_height="37dp"
+	        android:layout_marginTop="10dp"
+	        android:layout_marginLeft="10dp"
+	        android:src="@drawable/restaurante" />
+
+	    <TextView
+	        android:id="@+id/nombre"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/icon"
+	        android:paddingLeft="10dp"
+	        android:layout_marginTop="7dp"
+	        android:layout_marginRight="4dp"
+	        android:textAppearance="?android:attr/textAppearanceLarge"
+	        android:singleLine="true"/>
+	    
+	    <TextView
+	        android:id="@+id/direccion"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/icon"
+	        android:paddingLeft="10dp"
+	        android:paddingBottom="5dp"
+	        android:layout_marginRight="4dp"
+	        android:layout_below="@+id/nombre"
+	        android:textAppearance="?android:attr/textAppearanceMedium"
+	        android:textColor="#777777" />
+
+	</RelativeLayout>
+	
+    <RelativeLayout 
+        android:id="@+id/editable"
+        android:layout_below="@+id/cabecera"
+        android:layout_width="match_parent"
+    	android:layout_height="wrap_content"
+    	android:layout_marginTop="5dp"
+    	android:layout_marginLeft="3dp"
+    	android:layout_marginRight="3dp"
+    	android:background="@drawable/background_listview">
+
+        <TextView
+            android:id="@+id/valoracionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/valoracion"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <RelativeLayout 
+	        android:id="@+id/valoracion"
+	        android:layout_width="wrap_content"
+	    	android:layout_height="wrap_content"
+	    	android:layout_marginLeft="10dp"
+	    	android:layout_toRightOf="@+id/valoracionTitle">
+	    	
+	        <ImageView
+		        android:id="@+id/v1"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="10dp"
+		        android:src="@drawable/staroff" />
+	        <ImageView
+		        android:id="@+id/v2"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v1"
+		        android:src="@drawable/staroff" />
+	        <ImageView
+		        android:id="@+id/v3"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v2"
+		        android:src="@drawable/staroff" />
+	        <ImageView
+		        android:id="@+id/v4"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v3"
+		        android:src="@drawable/staroff" />
+	        <ImageView
+		        android:id="@+id/v5"
+		        android:layout_width="30dp"
+		        android:layout_height="30dp"
+		        android:layout_marginTop="10dp"
+		        android:layout_marginLeft="5dp"
+		        android:layout_toRightOf="@+id/v4"
+		        android:src="@drawable/staroff" />
+
+	    </RelativeLayout>
+
+        <TextView
+            android:id="@+id/precioTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/precio"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/valoracionTitle"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <Spinner
+            android:id="@+id/precio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/precioTitle"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/valoracionTitle" />
+
+        <TextView
+            android:id="@+id/nombreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/precio"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/nombre_usuario" />
+        
+        <EditText
+            android:id="@+id/nombre_usuario"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/nombreTitle"
+            android:ems="10" 
+            android:maxLength="50"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/recomendacionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp"
+            android:text="@string/recomendacion"
+            android:layout_below="@+id/nombre_usuario"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <EditText
+            android:id="@+id/recomendacion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recomendacionTitle"
+            android:ems="10" 
+            android:maxLength="120"
+            android:singleLine="true" />
+
+        <TextView
+            android:id="@+id/opinionTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/opinion"
+            android:layout_marginLeft="5dp"
+            android:layout_below="@+id/recomendacion"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+        
+        <EditText
+            android:id="@+id/opinion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/opinionTitle"
+            android:ems="10" 
+            android:maxLength="160"
+            android:maxLines="5" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -55,40 +55,35 @@
 		        android:layout_width="30dp"
 		        android:layout_height="30dp"
 		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_marginLeft="10dp" />
 	        <ImageView
 		        android:id="@+id/v2"
 		        android:layout_width="30dp"
 		        android:layout_height="30dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v1"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v1" />
 	        <ImageView
 		        android:id="@+id/v3"
 		        android:layout_width="30dp"
 		        android:layout_height="30dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v2"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v2" />
 	        <ImageView
 		        android:id="@+id/v4"
 		        android:layout_width="30dp"
 		        android:layout_height="30dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v3"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v3" />
 	        <ImageView
 		        android:id="@+id/v5"
 		        android:layout_width="30dp"
 		        android:layout_height="30dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v4"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v4" />
 
 	    </RelativeLayout>
 	    
@@ -114,5 +109,15 @@
       android:layout_width="match_parent"
       android:divider="@android:color/transparent"
   	  android:dividerHeight="10sp" />
+    
+    <TextView
+      android:id="@+id/nocomments"
+      android:layout_marginTop="10dp"
+      android:layout_below="@+id/cabecera"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_centerHorizontal="true"
+      android:textAppearance="?android:attr/textAppearanceMedium"
+      android:textColor="#777777"/>
 
 </RelativeLayout>

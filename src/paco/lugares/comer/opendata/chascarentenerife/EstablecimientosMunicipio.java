@@ -2,6 +2,7 @@ package paco.lugares.comer.opendata.chascarentenerife;
 
 import static com.roscopeco.ormdroid.Query.eql;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.http.client.methods.HttpGet;
@@ -12,6 +13,7 @@ import paco.lugares.comer.opendata.chascarentenerife.controllers.Establecimiento
 import paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.models.JSONToModel;
+import paco.lugares.comer.opendata.chascarentenerife.models.Valoracion;
 import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.server.IStandardTaskListener;
 import paco.lugares.comer.opendata.chascarentenerife.server.RequestArrayJSONResponse;
@@ -93,9 +95,9 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 					myIntent.putExtra("idserver", establecimiento.idserver);
 					myIntent.putExtra("nombre", establecimiento.nombre);
 					myIntent.putExtra("municipio", municipio);
-					ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", establecimiento.idserver)).execute();
-					myIntent.putExtra("media", ((vE.media != null && (!vE.media.equals("0"))) ? vE.media : view.getContext().getResources().getString(R.string.valor_defecto)));
-					myIntent.putExtra("precio", vE.precio);
+					Valoracion vE = ValoracionEstablecimiento.valoracion.get(establecimiento.idserver);
+					myIntent.putExtra("media", ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : view.getContext().getResources().getString(R.string.valor_defecto)));
+					myIntent.putExtra("precio", (vE != null) ? vE.precio : "0");
 	        		startActivity(myIntent);
 				}
 			}
@@ -141,17 +143,10 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 	    public void taskComplete(Object result) {
 	    	if (result != null){
 	    		JSONArray responseServer = (JSONArray) result;
+	    		ValoracionEstablecimiento.valoracion = new HashMap<String, Valoracion>();
 	    		for(int i=0; i<responseServer.length(); i++){
 	        		try {
-	        			ValoracionEstablecimiento vE = JSONToModel.toValoracionEstablecimientoModel(context, responseServer.getJSONObject(i));
-	        			ValoracionEstablecimiento vEbusqueda = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", vE.idserver)).execute();
-	        			if (vEbusqueda == null){
-	        				vE.save();
-	        			} else {
-	        				vEbusqueda.media = (vE.media != null) ? vE.media : vEbusqueda.media;
-	        				vEbusqueda.precio = (vE.precio != null) ? vE.precio : vEbusqueda.precio;
-	        				vEbusqueda.save();
-	        			}
+	        			JSONToModel.toValoracionEstablecimientoModel(context, responseServer.getJSONObject(i));
 	        		} catch (Exception e){}
 	    		}
 			}

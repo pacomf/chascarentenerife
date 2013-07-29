@@ -190,7 +190,7 @@ public class Utilities {
 	
 	public static String getCamelCase(String init){
 		if (init==null)
-	        return null;
+	        return "";
 
 	    final StringBuilder ret = new StringBuilder(init.length());
 

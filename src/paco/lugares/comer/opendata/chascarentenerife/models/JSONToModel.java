@@ -21,9 +21,7 @@ public class JSONToModel {
 			String longitud = json.getString("longitud");
 			String municipio = json.getString("municipio");
 			String plazas = json.getString("plazas");
-			String media = json.getString("media");
-			String precio = json.getString("precio");
-			Establecimiento establecimiento = new Establecimiento(idserver, nombre, tipo, direccion, numero, cp, latitud, longitud, municipio, plazas, media, precio);
+			Establecimiento establecimiento = new Establecimiento(idserver, nombre, tipo, direccion, numero, cp, latitud, longitud, municipio, plazas);
 			return establecimiento;
 		} catch (Exception e) {
 			Toast.makeText(ctx, R.string.excepcion_convertir_json, Toast.LENGTH_LONG).show();
@@ -31,16 +29,15 @@ public class JSONToModel {
 		}	
 	}
 	
-	public static ValoracionEstablecimiento toValoracionEstablecimientoModel (Context ctx, JSONObject json){
+	public static void toValoracionEstablecimientoModel (Context ctx, JSONObject json){
 		try {
-			String idserver = json.getString("_id");
+			String idserver = json.getString("idserver");
 			String media = json.getString("media");
 			String precio = json.getString("precio");
-			ValoracionEstablecimiento vEstablecimiento = new ValoracionEstablecimiento(idserver, media, precio);
-			return vEstablecimiento;
+			ValoracionEstablecimiento.valoracion.put(idserver, new Valoracion(precio, media));
 		} catch (Exception e) {
 			Toast.makeText(ctx, R.string.excepcion_convertir_json, Toast.LENGTH_LONG).show();
-			return null;
+			return;
 		}	
 	}
 	

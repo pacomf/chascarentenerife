@@ -63,6 +63,10 @@
             android:name="paco.lugares.comer.opendata.chascarentenerife.ComentariosEstablecimiento"
             android:label="@string/title_activity_comentarios_establecimiento" >
         </activity>
+        <activity
+            android:name="paco.lugares.comer.opendata.chascarentenerife.NuevoComentario"
+            android:label="@string/title_activity_nuevo_comentario" >
+        </activity>
     </application>
 
     <permission

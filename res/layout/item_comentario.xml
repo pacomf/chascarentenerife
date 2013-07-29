@@ -15,40 +15,35 @@
 		        android:layout_width="22dp"
 		        android:layout_height="22dp"
 		        android:layout_marginTop="10dp"
-		        android:layout_marginLeft="10dp"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_marginLeft="10dp"/>
 	        <ImageView
 		        android:id="@+id/v2"
 		        android:layout_width="22dp"
 		        android:layout_height="22dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v1"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v1" />
 	        <ImageView
 		        android:id="@+id/v3"
 		        android:layout_width="22dp"
 		        android:layout_height="22dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v2"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v2" />
 	        <ImageView
 		        android:id="@+id/v4"
 		        android:layout_width="22dp"
 		        android:layout_height="22dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v3"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v3"/>
 	        <ImageView
 		        android:id="@+id/v5"
 		        android:layout_width="22dp"
 		        android:layout_height="22dp"
 		        android:layout_marginTop="10dp"
 		        android:layout_marginLeft="5dp"
-		        android:layout_toRightOf="@+id/v4"
-		        android:src="@drawable/ic_launcher" />
+		        android:layout_toRightOf="@+id/v4" />
 
 	    </RelativeLayout>
 	    
@@ -59,7 +54,10 @@
 	        android:layout_toRightOf="@id/valoracion"
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginTop="20dp"
+	        android:layout_marginRight="5dp"
 	        android:textColor="#777777"
+	        android:layout_alignParentRight="true"
+	        android:gravity="right"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
 	        android:singleLine="true"/>
     	
@@ -78,6 +76,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_toRightOf="@id/usuario"
+	        android:layout_alignParentRight="true"
+	        android:gravity="right"
+	        android:layout_marginRight="7dp"
 	        android:layout_below="@id/valoracion"
 	        android:layout_marginLeft="10dp"
 	        android:layout_marginTop="12dp"
@@ -125,6 +126,6 @@
 	        android:textColor="#666666"
 	        android:layout_marginTop="4dp"
 	        android:textAppearance="?android:attr/textAppearanceMedium"
-	        android:layout_marginBottom="5dp" />
+	        android:paddingBottom="5dp" />
 
 </RelativeLayout>

@@ -1,16 +1,13 @@
 package paco.lugares.comer.opendata.chascarentenerife.adapters;
 
-
-import static com.roscopeco.ormdroid.Query.eql;
-
-import java.util.ArrayList;
+import java.text.DecimalFormat;
 import java.util.List;
 
-import com.roscopeco.ormdroid.Entity;
 
 import paco.lugares.comer.opendata.chascarentenerife.R;
 import paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.Valoracion;
 import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 
 import android.app.Activity;
@@ -59,33 +56,37 @@ public class EstablecimientoAdapter extends BaseAdapter {
 	             
 	    Establecimiento item = items.get(position);
 	    
-	    ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", item.idserver)).execute();
+	    Valoracion vE = ValoracionEstablecimiento.valoracion.get(item.idserver);
 	    
 	    if (vE != null){
-	    	TextView nombre = (TextView) vi.findViewById(R.id.media);
+	    	TextView mediaTV = (TextView) vi.findViewById(R.id.media);
 	    	Double media = (Double.parseDouble(vE.media) != Double.NaN) ? Double.parseDouble(vE.media) : 0;
 		    if (media != 0){
 		    	int color;
 		    	if (media < 3)
-			    	color = Color.RED;
+			    	color = Color.parseColor("#C7000A");
 			    else if ((media >= 3) && (media < 4))
-			    	color = Color.BLUE;
+			    	color = Color.parseColor("#06799F");
 			    else
-			    	color = Color.GREEN;
-			    nombre.setTextColor(color);
-			    nombre.setText(vE.media);
+			    	color = Color.parseColor("#228D00");
+			    mediaTV.setTextColor(color);
+			    mediaTV.setText(String.format("%.1f", media));
+		    } else {
+		    	mediaTV.setText("");
 		    }
 		    
 		    View linea = (View) vi.findViewById(R.id.precioColor);
 		    String precio = (vE.precio != null) ? vE.precio : "0";
 		    if (precio.equals("1")){
-		    	linea.setBackgroundColor(Color.GREEN);
+		    	linea.setBackgroundColor(Color.parseColor("#228D00")); // Verde
 		    } else if (precio.equals("2")){
-		    	linea.setBackgroundColor(Color.BLUE);
+		    	linea.setBackgroundColor(Color.parseColor("#06799F")); // Azul
 		    } else if (precio.equals("3")){
-		    	linea.setBackgroundColor(Color.YELLOW);
+		    	linea.setBackgroundColor(Color.parseColor("#FFBA00")); // Amarillo
 		    } else if (precio.equals("4")){
-		    	linea.setBackgroundColor(Color.RED);
+		    	linea.setBackgroundColor(Color.parseColor("#C7000A")); // Rojo
+		    } else {
+		    	linea.setBackgroundColor(Color.parseColor("#DDDDDD")); // Gris
 		    }
 	    }
 	    

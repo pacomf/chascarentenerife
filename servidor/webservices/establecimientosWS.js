@@ -59,7 +59,12 @@ module.exports = function(app){
 
     listEstablecimientosGeoMunicipio = function(req, res) {  
         Establecimiento.find({$and: [{latitud: {$ne: "0"}}, {municipio: replaceAll(req.params.municipio, "_", " ")}]}, function(error, establecimientos) {
-            res.send(establecimientos);  
+            var respuesta = [];
+            establecimientos.forEach(function(est) {
+                var object = {idserver: est._id, media: est.media, precio: est.precio};
+                respuesta.push(object);
+            });
+            res.send(JSON.stringify(respuesta));  
         });
     };
 
@@ -75,6 +80,80 @@ module.exports = function(app){
         });
     };
 
+    nuevoComentario = function (req, res){
+        var fecha = req.body.fecha;
+        var valoracion = req.body.valoracion;
+        var usuario = req.body.usuario;
+        var precio = req.body.precio;
+        var recomendacion = req.body.recomendacion;
+        var opinion = req.body.opinion;
+
+        Establecimiento.findOne({_id: req.params.idestablecimiento}, function(error, establecimiento) {
+            if ((establecimiento !== null) && (establecimiento !== undefined)){
+                var media = establecimiento.media;
+                var precioMedio = establecimiento.precio;
+                Comentario.find({idestablecimiento: req.params.idestablecimiento}, function(err, comentarios) { 
+                     var count = comentarios.length; 
+                     var mediaSum = media * count;
+                     establecimiento.media = (mediaSum+valoracion)/(count+1);
+                     establecimiento.precio = calcularModaPrecioComentarios(comentarios, precio);
+                     establecimiento.save();
+                     var comentarioNuevo = new Comentario({ usuario: usuario,
+                                                            fecha: new Date(fecha), 
+                                                            valoracion: valoracion, 
+                                                            precio: precio,
+                                                            recomendacion: recomendacion, 
+                                                            opinion: opinion,
+                                                            idestablecimiento: req.params.idestablecimiento});
+                     comentarioNuevo.save();
+                     res.send("ok");
+                });  
+            } else {
+                res.send("err");
+            }
+        });
+    }
+
+    function calcularModaPrecioComentarios (comentarios, nuevoPrecio){
+        var barato = 0;
+        var normal = 0;
+        var carillo = 0;
+        var caro = 0;
+        if  (nuevoPrecio === 1)
+            barato++;
+        else if (nuevoPrecio === 2)
+            normal++;
+        else if (nuevoPrecio === 3)
+            carillo++;
+        else if (nuevoPrecio === 4)
+            caro++;
+        comentarios.forEach(function(com) {
+            if  (com.precio === 1)
+                barato++;
+            else if (com.precio === 2)
+                normal++;
+            else if (com.precio === 3)
+                carillo++;
+            else if (com.precio === 4)
+                caro++;
+        });
+        return mayorValor(barato, normal, carillo, caro);
+    }
+
+    function mayorValor(barato, normal, carillo, caro){
+        var max = Math.max(barato, normal, carillo, caro);
+        if (max === barato)
+            return 1;
+        else if (max === normal)
+            return 2;
+        else if (max === carillo)
+            return 3;
+        else if (max === caro)
+            return 4;
+    }
+
+
+    app.post('/comentario/:idestablecimiento', nuevoComentario);
 
     app.get('/actualizarDatosGeo/:zona/:version', actualizarDatosGeo);
     app.get('/infoDatos/:zona', version);  

@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 public class Principal extends SherlockFragmentActivity {
@@ -46,6 +47,13 @@ public class Principal extends SherlockFragmentActivity {
 		
 		initBotonAlrededor();
 		initBotonMunicipios();
+		
+		Bundle bundle = getIntent().getExtras();
+		if (bundle != null){
+			Boolean guardadoComentario = bundle.getBoolean("guardadoComentario");
+			if ((guardadoComentario != null) && (guardadoComentario))
+				Toast.makeText(this, R.string.guardado_comentario, Toast.LENGTH_LONG).show();
+		}
 
 	}
 	

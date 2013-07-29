@@ -2,7 +2,7 @@
 var mongoose = require('mongoose'),  
     Schema = mongoose.Schema;  
   
-var ComentarioSchema = new Schema({  
+var comentarioSchema = new Schema({  
     usuario: String,
     fecha: Date, 
     valoracion: { type: Number, default: 0 }, 

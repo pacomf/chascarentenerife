@@ -10,6 +10,7 @@ import paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation.LocationResult;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.Valoracion;
 import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -129,8 +130,7 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 		        	myIntent.putExtra("nombre", establecimiento.nombre);
 		        	myIntent.putExtra("tipo", establecimiento.tipo);
 		        	myIntent.putExtra("direccion", establecimiento.direccion);
-		        	
-		        	ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", establecimiento.idserver)).execute();
+		        	Valoracion vE = ValoracionEstablecimiento.valoracion.get(establecimiento.idserver);
 					myIntent.putExtra("media", ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : getResources().getString(R.string.valor_defecto)));
 					myIntent.putExtra("precio", (vE != null) ? vE.precio : "0");
 		            startActivity(myIntent);
@@ -183,7 +183,8 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 			if (media.equals(getResources().getString(R.string.valor_defecto))){
 				subtitle = getResources().getString(R.string.sinvaloraciones);
 			} else {
-				subtitle+=media+" | "+Utilities.getPrecioStr(this, precio);
+				Double mediaD = Double.parseDouble(media);
+				subtitle+=String.format("%.1f", mediaD)+" | "+Utilities.getPrecioStr(this, precio);
 			}
 			Marker m = mapa.addMarker(new MarkerOptions()
         	.position(new LatLng(Double.valueOf(latitud)/10000000, Double.valueOf(longitud)/10000000))
@@ -230,13 +231,14 @@ public class MapaEstablecimientos extends SherlockFragmentActivity  {
 			// Insertamos el Marcador
 			Double latitud = Double.valueOf(es.latitud)/10000000;
 			Double longitud = Double.valueOf(es.longitud)/10000000;
-			ValoracionEstablecimiento vE = Entity.query(ValoracionEstablecimiento.class).where(eql("idserver", es.idserver)).execute();
+			Valoracion vE = ValoracionEstablecimiento.valoracion.get(es.idserver);
 			String subtitle = "";
 			if (vE != null){
 				if ((vE.media.equals(getResources().getString(R.string.valor_defecto))) || (vE.media.equals("0"))){
 					subtitle = getResources().getString(R.string.sinvaloraciones);
 				} else {
-					subtitle+=vE.media+" | "+Utilities.getPrecioStr(this, vE.precio);
+					Double mediaD = Double.parseDouble(vE.media);
+					subtitle+=String.format("%.1f", mediaD)+" | "+Utilities.getPrecioStr(this, vE.precio);
 				}
 			} else{
 				subtitle = getResources().getString(R.string.sinvaloraciones);

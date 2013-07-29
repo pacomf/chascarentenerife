@@ -42,7 +42,7 @@ import android.widget.Toast;
 public class ComentariosEstablecimiento extends SherlockActivity {
 	
 	ListView listView1;
-	TextView nombre, direccion, precio;
+	TextView nombre, direccion, precio, nocomments;
 	ImageView icono, v1, v2, v3, v4, v5;
 	List<Comentario> comentarios = null;
 
@@ -54,7 +54,6 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 		ActionBar ab = getSupportActionBar();
         ab.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE|ActionBar.DISPLAY_SHOW_HOME|ActionBar.DISPLAY_HOME_AS_UP);
 
-		
 		Bundle bundle = getIntent().getExtras();
 		String idserver=bundle.getString("idserver");
 		String nombreStr=bundle.getString("nombre");
@@ -64,6 +63,7 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 		String direccionStr=bundle.getString("direccion");
 
 		listView1 = (ListView) findViewById(R.id.lista_comentarios);
+		nocomments = (TextView) findViewById(R.id.nocomments);
 		
 		initCabecera(nombreStr, direccionStr, tipoStr, mediaStr, precioStr, idserver);
 	}
@@ -80,20 +80,21 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 		v4 = (ImageView) findViewById(R.id.v4);
 		v5 = (ImageView) findViewById(R.id.v5);
 		
-
+		setValoracionCabecera (v1, v2, v3, v4, v5, mediaStr);
+		
 		nombre.setText(Utilities.getCamelCase(nombreStr));
 		direccion.setText(Utilities.getCamelCase(direccionStr));
 		precioStr = (precioStr != null) ? precioStr : "0";
 		precio.setText(Utilities.getPrecioStr(this, precioStr));
 		
 	    if (precioStr.equals("1")){
-	    	precio.setTextColor(Color.GREEN);
+	    	precio.setTextColor(Color.parseColor("#228D00"));
 	    } else if (precioStr.equals("2")){
-	    	precio.setTextColor(Color.BLUE);
+	    	precio.setTextColor(Color.parseColor("#06799F"));
 	    } else if (precioStr.equals("3")){
-	    	precio.setTextColor(Color.YELLOW);
+	    	precio.setTextColor(Color.parseColor("#FFBA00"));
 	    } else if (precioStr.equals("4")){
-	    	precio.setTextColor(Color.RED);
+	    	precio.setTextColor(Color.parseColor("#C7000A"));
 	    }
 		
 		icono.setImageResource(Utilities.getIconoTipo(this, tipoStr));
@@ -111,8 +112,52 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 			taskResquest.setParams(new ResponseServer_comentarios_TaskListener(this, pd, this), ServerConnection.getClient(), get);
 			taskResquest.execute();	
 		}
-		
-		
+	}
+	
+	private void setValoracionCabecera (ImageView v1, ImageView v2, ImageView v3, ImageView v4, ImageView v5, String valoracionStr){
+		  if ((valoracionStr ==  null) || valoracionStr.equals("")){
+			  return;
+		  }
+		  Double valoracion = Double.valueOf(valoracionStr);
+		  if ((valoracion >= 1) && (valoracion < 1.5)){
+			  v1.setImageResource(R.drawable.ic_launcher);
+		  } else if ((valoracion >= 1.5) && (valoracion < 2)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.starhalf);
+		  } else if ((valoracion > 2) && (valoracion < 2.5)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+		  } else if ((valoracion >= 2.5) && (valoracion < 3)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.starhalf);
+		  } else if ((valoracion > 3) && (valoracion < 3.5)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+		  } else if ((valoracion >= 3.5) && (valoracion < 4)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.starhalf);
+		  } else if ((valoracion > 4) && (valoracion < 4.5)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.ic_launcher);
+		  } else if ((valoracion >= 4.5) && (valoracion < 5)) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.ic_launcher);
+			  v5.setImageResource(R.drawable.starhalf);
+		  } else if (valoracion == 5) {
+			  v1.setImageResource(R.drawable.ic_launcher);
+			  v2.setImageResource(R.drawable.ic_launcher);
+			  v3.setImageResource(R.drawable.ic_launcher);
+			  v4.setImageResource(R.drawable.ic_launcher);
+			  v5.setImageResource(R.drawable.ic_launcher);
+		  }
 	}
 	
 	private class ResponseServer_comentarios_TaskListener implements IStandardTaskListener {
@@ -137,13 +182,14 @@ public class ComentariosEstablecimiento extends SherlockActivity {
 	        			comentarios.add(JSONToModel.toComentarioModel(context, responseServer.getJSONObject(i)));
 	        		} catch (Exception e){}
 	    		}
-	    		ComentarioAdapter adapter = new ComentarioAdapter(activity, comentarios);
-		        listView1.setAdapter(adapter);
-			} else { // TODO: Quitar esto!!!
-				comentarios.add(new Comentario("Paco", "14/08/2008", "4", "1", "El Pulpo a la gallega y el salpicón de atún", "Espectacular lugar donde los haya, bueno, bonito y baratao. Cumple con las expectatvivas y es un clásico."));
-				comentarios.add(new Comentario("Paco Martin", "14/09/2008", "2", "4", "El Pulpo a la gallega y el salpicón de atún", "Espectacular lugar donde los haya, bueno, bonito y baratao. Cumple con las expectatvivas y es un clásico."));
-				ComentarioAdapter adapter = new ComentarioAdapter(activity, comentarios);
-		        listView1.setAdapter(adapter);
+	    		if (comentarios.size()>0){
+		    		ComentarioAdapter adapter = new ComentarioAdapter(activity, comentarios);
+			        listView1.setAdapter(adapter);
+	    		} else {
+	    			nocomments.setText(context.getResources().getString(R.string.nohaycomentarios));
+	    		}
+			} else {
+				nocomments.setText(context.getResources().getString(R.string.nohaycomentarios));
 			}
 	    	pd.dismiss();
 	    }
@@ -153,7 +199,7 @@ public class ComentariosEstablecimiento extends SherlockActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getSupportMenuInflater();
         // TODO: Cambiar MENU
-        inflater.inflate(R.menu.menu_establecimientos_municipio, menu);
+        inflater.inflate(R.menu.menu_comentarios, menu);
         return true;
     }
 	
@@ -172,7 +218,20 @@ public class ComentariosEstablecimiento extends SherlockActivity {
             startActivity(myIntent);
             finish();
             return true;
-        } 
+        } else if (item.getItemId() == R.id.nuevo_comentario) {
+            Intent myIntent = new Intent(this, NuevoComentario.class);
+            Bundle bundle = getIntent().getExtras();
+            String nombreStr=bundle.getString("nombre");
+    		String tipoStr=bundle.getString("tipo");
+    		String direccionStr=bundle.getString("direccion");
+    		String idserver=bundle.getString("idserver");
+            myIntent.putExtra("idserver", idserver);
+            myIntent.putExtra("nombre", nombreStr);
+            myIntent.putExtra("direccion", direccionStr);
+            myIntent.putExtra("tipo", tipoStr);
+            startActivity(myIntent);
+            return true;
+        }
         return false;
     }
 

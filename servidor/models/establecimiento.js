@@ -13,7 +13,7 @@ var establecimientoSchema = new Schema({
     municipio: String, 
     plazas: Number,
     media: { type: Number, default: 0 },
-    precio: { type: String, default: "0" }
+    precio: { type: Number, default: 0 }
 });  
   
 //Export the schema  
