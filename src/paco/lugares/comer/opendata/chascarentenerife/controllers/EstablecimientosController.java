@@ -153,9 +153,11 @@ public class EstablecimientosController {
 	        			if (encontrado == null){
 	        				establecimiento.save();
 	        			} else {
+	        				encontrado.delete();
+	        				establecimiento.save();
 	        				// TODO: Ver si 'borrar y crear' o Actualizar... cuando haya nuevas versiones del fichero.
-	        				encontrado.actualizar(establecimiento.nombre, establecimiento.tipo, establecimiento.direccion, establecimiento.numero, establecimiento.cp, establecimiento.latitud, establecimiento.longitud, establecimiento.municipio, establecimiento.plazas);
-	        				encontrado.save();
+	        				// encontrado.actualizar(establecimiento.nombre, establecimiento.tipo, establecimiento.direccion, establecimiento.numero, establecimiento.cp, establecimiento.latitud, establecimiento.longitud, establecimiento.municipio, establecimiento.plazas);
+	        				// encontrado.save();
 	        			}
 	        			porcentaje=(int)((i*100)/buffer.length());
 	        			publishProgress("" + porcentaje);
@@ -197,10 +199,10 @@ public class EstablecimientosController {
 		        } else{
 		        	Version encontrado = Entity.query(Version.class).where(eql("zona", "Tenerife")).execute();
 		    		if (encontrado == null){
-		    			Version nuevaVersion = new Version("1", "Tenerife");
+		    			Version nuevaVersion = new Version("2", "Tenerife");
 		    			nuevaVersion.save();
 		    		} else {
-		    			encontrado.version = "1";
+		    			encontrado.version = "2";
 		    			Calendar c = Calendar.getInstance(); 
 		    			c.setTime(new Date()); 
 		    			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");

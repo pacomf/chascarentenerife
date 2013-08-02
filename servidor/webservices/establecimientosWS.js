@@ -31,12 +31,26 @@ module.exports = function(app){
     };
 
     listEstablecimientosArea = function(req, res){
-    	Establecimiento.find({$and: [{latitud: {$gt: req.params.latmin, $lt: req.params.latmax}}, 
-                           			 {longitud:{$gt: req.params.lngmin, $lt: req.params.lngmax}}
+    	Establecimiento.find({$and: [{latitudn: {$gte: req.params.latmin, $lte: req.params.latmax}}, 
+                           			 {longitudn:{$gte: req.params.lngmin, $lte: req.params.lngmax}}
                            			]
                            	 }, function(error, establecimientos){
                            	 		res.send(establecimientos);
                            	 });
+    }
+
+    listEstablecimientosAreaValoracion = function(req, res){
+        Establecimiento.find({$and: [{latitudn: {$gte: req.params.latmin, $lt: req.params.latmax}}, 
+                                     {longitudn:{$gte: req.params.lngmin, $lt: req.params.lngmax}}
+                                    ]
+                             }, function(error, establecimientos){
+                                    var respuesta = [];
+                                    establecimientos.forEach(function(est) {
+                                        var object = {idserver: est._id, media: est.media, precio: est.precio};
+                                        respuesta.push(object);
+                                    });
+                                    res.send(JSON.stringify(respuesta)); 
+                             });
     }
 
     actualizarDatosGeo = function(req, res) {  
@@ -163,6 +177,7 @@ module.exports = function(app){
     app.get('/establecimientosGeo', listEstablecimientosGeo);
     app.get('/establecimientosGeo/:municipio', listEstablecimientosGeoMunicipio);
     app.get('/establecimientosNoGeo', listEstablecimientosNoGeo);
+    app.get('/establecimientosAreaValoracion/:latmin/:latmax/:lngmin/:lngmax', listEstablecimientosAreaValoracion); 
     app.get('/establecimientosArea/:latmin/:latmax/:lngmin/:lngmax', listEstablecimientosArea); 
 
     app.get('/comentarios/:establecimiento', listComentariosEstablecimiento); 

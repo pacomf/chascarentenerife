@@ -1,15 +1,28 @@
 package paco.lugares.comer.opendata.chascarentenerife;
 
+import static com.roscopeco.ormdroid.Query.eql;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import org.apache.http.client.methods.HttpGet;
+import org.json.JSONArray;
 
 import paco.lugares.comer.opendata.chascarentenerife.controllers.EstablecimientosController;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation;
 import paco.lugares.comer.opendata.chascarentenerife.location.MyLocation.LocationResult;
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.JSONToModel;
+import paco.lugares.comer.opendata.chascarentenerife.models.Valoracion;
+import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.places.DetailsPlaceOne;
 import paco.lugares.comer.opendata.chascarentenerife.places.FillPlace;
 import paco.lugares.comer.opendata.chascarentenerife.server.IStandardTaskListener;
+import paco.lugares.comer.opendata.chascarentenerife.server.RequestArrayJSONResponse;
+import paco.lugares.comer.opendata.chascarentenerife.server.ServerConnection;
 import paco.lugares.comer.opendata.chascarentenerife.server.Utilities;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -30,6 +43,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.roscopeco.ormdroid.Entity;
 import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import android.location.Address;
@@ -68,6 +82,7 @@ public class Alrededor extends SherlockFragmentActivity {
 	private Marker marcador;
 	Context ctx;
 	private Thread thread;  
+	Map <Marker, String> marcadorId = new HashMap<Marker, String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -139,8 +154,29 @@ public class Alrededor extends SherlockFragmentActivity {
         	Intent myIntent = new Intent(this, Info.class);
             startActivity(myIntent);
         	return true;
+        } else if (item.getItemId() == R.id.valoraciones) {
+        	if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(this)){
+				Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+				return false;
+			}
+        	String idserver = marcadorId.get(marcador);
+        	if(idserver != null){
+        		Establecimiento establecimiento = Entity.query(Establecimiento.class).where(eql("idserver", idserver)).execute();
+	        	if (establecimiento != null){
+		        	Intent myIntent = new Intent(this, ComentariosEstablecimiento.class);
+		        	myIntent.putExtra("idserver", establecimiento.idserver);
+		        	myIntent.putExtra("nombre", establecimiento.nombre);
+		        	myIntent.putExtra("tipo", establecimiento.tipo);
+		        	myIntent.putExtra("direccion", establecimiento.direccion);
+		        	Valoracion vE = ValoracionEstablecimiento.valoracion.get(establecimiento.idserver);
+					myIntent.putExtra("media", ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : getResources().getString(R.string.valor_defecto)));
+					myIntent.putExtra("precio", (vE != null) ? vE.precio : "0");
+		            startActivity(myIntent);
+	        	}
+        	}
+        	return true;
         }
-        return false;
+    	return false;
     }
 	
 	private void moverMapaCenterTenerife(){
@@ -251,6 +287,11 @@ public class Alrededor extends SherlockFragmentActivity {
 				
 				resetearMenu();
 				
+				if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(v.getContext())){
+					Toast.makeText(v.getContext(), R.string.no_internet, Toast.LENGTH_LONG).show();
+					return;
+				}
+				
 				LocationResult locationResult = new LocationResult(){
 				    @Override
 				    public void gotLocation(Location location){
@@ -340,7 +381,26 @@ public class Alrededor extends SherlockFragmentActivity {
 		    	        	.title(getResources().getString(R.string.milocalizacion))
 		    	        	.draggable(true)
 		    	        	.icon(BitmapDescriptorFactory.fromResource(R.drawable.miposicion)));
-		        		pintarMarkers(Long.parseLong(String.format("%.7f",  lat).replace(",", "")), Long.parseLong(String.format("%.7f",  lng).replace(",", "")));
+		        		Long latitudL, longitudL;
+		        		try{
+		        			latitudL=Long.parseLong(String.format("%.7f",  lat).replace(",", ""));
+		        		} catch (Exception e){
+		        			try {
+		        				latitudL=Long.parseLong(String.format("%.7f",  lat).replace(".", ""));
+		        			} catch (Exception er){
+		        				return;
+		        			}
+		        		}
+		        		try{
+		        			longitudL=Long.parseLong(String.format("%.7f",  lng).replace(",", ""));
+		        		} catch (Exception e){
+		        			try {
+		        				longitudL=Long.parseLong(String.format("%.7f",  lng).replace(".", ""));
+		        			} catch (Exception er){
+		        				return;
+		        			}
+		        		}
+		        		pintarMarkers(latitudL, longitudL);
 					} catch (Exception e) {
 					}
 			        
@@ -411,16 +471,99 @@ public class Alrededor extends SherlockFragmentActivity {
 		pd = ProgressDialog.show(ctx, getResources().getText(R.string.procesando), getResources().getText(R.string.esperar));
         pd.setIndeterminate(false);
         pd.setCancelable(true);
-		for (Establecimiento es: EstablecimientosController.getCercanos(lat, lng, 500D)){
-			// Insertamos el Marcador
-			Double latitud = Double.valueOf(es.latitud)/10000000;
-			Double longitud = Double.valueOf(es.longitud)/10000000;
-    		mapa.addMarker(new MarkerOptions()
-	        	.position(new LatLng(latitud, longitud))
-	        	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(es.tipo+" "+es.nombre))
-	        	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(this,  es.tipo))));
+        if (!paco.lugares.comer.opendata.chascarentenerife.server.Utilities.haveInternet(this)){
+			for (Establecimiento es: EstablecimientosController.getCercanos(lat, lng, 500D)){
+				// Insertamos el Marcador
+				Double latitud = Double.valueOf(es.latitud)/10000000;
+				Double longitud = Double.valueOf(es.longitud)/10000000;
+				// TODO: Buscar Opiniones y rellenar Map para ir despues a los comentarios
+	    		mapa.addMarker(new MarkerOptions()
+		        	.position(new LatLng(latitud, longitud))
+		        	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(es.tipo+" "+es.nombre))
+		        	.snippet(getResources().getString(R.string.sinvaloraciones))
+		        	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(this,  es.tipo))));
+			}
+			pd.dismiss();
+			Toast.makeText(this, R.string.no_internet, Toast.LENGTH_LONG).show();
+		} else {
+	        ArrayList<Long> dimensiones = paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getXMeterAreaToPoint(lat, lng, 500D);
+	        if (dimensiones.size()>0){
+		        Double latmin = Double.valueOf(dimensiones.get(2))/10000000;
+		        Double latmax = Double.valueOf(dimensiones.get(0))/10000000;
+		        Double lngmin = Double.valueOf(dimensiones.get(3))/10000000;
+		        Double lngmax = Double.valueOf(dimensiones.get(1))/10000000;
+		        RequestArrayJSONResponse taskResquest = new RequestArrayJSONResponse();
+				HttpGet get = ServerConnection.getGet(getResources().getString(R.string.ip_server), getResources().getString(R.string.port_server), "establecimientosAreaValoracion/"+latmin+"/"+latmax+"/"+lngmin+"/"+lngmax);
+				taskResquest.setParams(new ResponseServer_valoraciones_TaskListener(this, pd, lat, lng), ServerConnection.getClient(), get);
+				taskResquest.execute();
+	        } else {
+	        	for (Establecimiento es: EstablecimientosController.getCercanos(lat, lng, 500D)){
+					// Insertamos el Marcador
+					Double latitud = Double.valueOf(es.latitud)/10000000;
+					Double longitud = Double.valueOf(es.longitud)/10000000;
+					// TODO: Buscar Opiniones y rellenar Map para ir despues a los comentarios
+		    		mapa.addMarker(new MarkerOptions()
+			        	.position(new LatLng(latitud, longitud))
+			        	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(es.tipo+" "+es.nombre))
+			        	.snippet(getResources().getString(R.string.sinvaloraciones))
+			        	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(this,  es.tipo))));
+				}
+				pd.dismiss();
+	        }
 		}
-		pd.dismiss();
+		
+	}
+	
+	private class ResponseServer_valoraciones_TaskListener implements IStandardTaskListener {
+	    
+		Context context;
+		ProgressDialog pd;
+		Long lat, lng;
+		
+	    public ResponseServer_valoraciones_TaskListener(Context context, ProgressDialog pd, long lat, long lng) {
+	    	this.context = context;
+	    	this.pd = pd;
+	    	this.lat = lat;
+	    	this.lng = lng;
+	    }
+	    
+	    @Override
+	    public void taskComplete(Object result) {
+	    	if (result != null){
+	    		JSONArray responseServer = (JSONArray) result;
+	    		ValoracionEstablecimiento.valoracion = new HashMap<String, Valoracion>();
+	    		for(int i=0; i<responseServer.length(); i++){
+	        		try {
+	        			JSONToModel.toValoracionEstablecimientoModel(context, responseServer.getJSONObject(i));
+	        		} catch (Exception e){}
+	    		}
+			} else{
+				ValoracionEstablecimiento.valoracion = new HashMap<String, Valoracion>();
+			}
+	    	marcadorId = new HashMap<Marker, String>();
+	    	for (Establecimiento es: EstablecimientosController.getCercanos(this.lat, this.lng, 500D)){
+				// Insertamos el Marcador
+				Double latitud = Double.valueOf(es.latitud)/10000000;
+				Double longitud = Double.valueOf(es.longitud)/10000000;
+				Valoracion vE = ValoracionEstablecimiento.valoracion.get(es.idserver);
+				String media = ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : context.getResources().getString(R.string.valor_defecto));
+				String precio = (vE != null) ? vE.precio : "0";
+				String subtitle = "";
+				if (media.equals(getResources().getString(R.string.valor_defecto))){
+					subtitle = getResources().getString(R.string.sinvaloraciones);
+				} else {
+					Double mediaD = Double.parseDouble(media);
+					subtitle+=String.format("%.1f", mediaD)+" | "+paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getPrecioStr(context, precio);
+				}
+	    		Marker m = mapa.addMarker(new MarkerOptions()
+		        	.position(new LatLng(latitud, longitud))
+		        	.title(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getCamelCase(es.tipo+" "+es.nombre))
+		        	.snippet(subtitle)
+		        	.icon(BitmapDescriptorFactory.fromResource(paco.lugares.comer.opendata.chascarentenerife.controllers.Utilities.getIconoTipo(context,  es.tipo))));
+	    		marcadorId.put(m, es.idserver);
+			}
+			pd.dismiss();
+	    }
 	}
 	
 	private class PlaceToPointMap_TaskListener implements IStandardTaskListener {

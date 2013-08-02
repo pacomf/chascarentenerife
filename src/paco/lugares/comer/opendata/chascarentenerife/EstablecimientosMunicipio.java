@@ -95,7 +95,9 @@ public class EstablecimientosMunicipio extends SherlockActivity {
 					myIntent.putExtra("idserver", establecimiento.idserver);
 					myIntent.putExtra("nombre", establecimiento.nombre);
 					myIntent.putExtra("municipio", municipio);
-					Valoracion vE = ValoracionEstablecimiento.valoracion.get(establecimiento.idserver);
+					Valoracion vE=null;
+				    if (ValoracionEstablecimiento.valoracion != null)
+						vE = ValoracionEstablecimiento.valoracion.get(establecimiento.idserver);
 					myIntent.putExtra("media", ((vE != null) && (vE.media != null && (!vE.media.equals("0"))) ? vE.media : view.getContext().getResources().getString(R.string.valor_defecto)));
 					myIntent.putExtra("precio", (vE != null) ? vE.precio : "0");
 	        		startActivity(myIntent);

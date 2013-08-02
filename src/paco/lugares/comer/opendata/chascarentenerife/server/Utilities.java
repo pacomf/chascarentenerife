@@ -153,9 +153,14 @@ public class Utilities {
 	    @Override
 	    public void taskComplete(Object result) {
 	    	if (result != null){
-	    		if (((String)result).equals("1")){
+	    		if (((String)result).equals("2")){
 	    			pd.dismiss();
 	    			JSONArray buffer = Utilities.parsearFicheroJSON(context, context.getResources().getString(R.string.ficheroinicial));
+	    			
+	    			if (buffer == null){
+	    				Toast.makeText(context, R.string.excepcion_parsear_json, Toast.LENGTH_LONG).show();
+	    				return;
+	    			}
 	    			
 	    			pd = new ProgressDialog(context);
 	        	    pd.setTitle(R.string.descargando);

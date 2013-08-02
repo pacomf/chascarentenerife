@@ -50,6 +50,17 @@ InfoDatos.find({}, function(err, resultado){
   }
 });
 
+// Para convertir String de posicion a Double y poder utilizarlo en comparaciones de Area
+/*Establecimiento.find({}, function(error, establecimientos) {
+      console.log("Empece");
+      establecimientos.forEach(function(est) {
+          est.latitudn = parseFloat(est.latitud);
+          est.longitudn = parseFloat(est.longitud);
+          est.save();
+      });
+      console.log("Termine");
+});*/
+
 // Trabajando con el CSV
 var getCSV = function(){
     console.log("A por el CSV!");
@@ -77,7 +88,9 @@ var getCSV = function(){
                                    numero: (dato[3] !== "NULL") ? dato[3] : null, 
                                    cp: (dato[4] !== "NULL") ? dato[4] : null, 
                                    latitud: ((dato[5] !== "NULL") && (dato[5].indexOf(",") !== -1)) ? dato[5].replace(",", ".") : "0",  
-                                   longitud: ((dato[6] !== "NULL") && (dato[5].indexOf(",") !== -1)) ? dato[6].replace(",", ".") : "0",  
+                                   longitud: ((dato[6] !== "NULL") && (dato[5].indexOf(",") !== -1)) ? dato[6].replace(",", ".") : "0", 
+                                   latitudn: ((dato[5] !== "NULL") && (dato[5].indexOf(",") !== -1)) ? parseFloat(dato[5]) : 0,
+                                   longitudn: ((dato[6] !== "NULL") && (dato[6].indexOf(",") !== -1)) ? parseFloat(dato[6]) : 0,
                                    municipio: (dato[8] !== "NULL") ? dato[8] : null,  
                                    plazas: (dato[9] !== "NULL") ? dato[9] : null, });  
 
@@ -89,7 +102,7 @@ var getCSV = function(){
                       }
                   });
                   console.log("Fichero CSV Parseado!");
-                  buscarGeo_basico();
+                  //buscarGeo_basico();
                 }
           );
       }
@@ -99,15 +112,15 @@ var getCSV = function(){
 //getCSV();
 
 geolocalizarEstablecimiento = function (direccion, id){
-    var places = new GooglePlaces('KEY');
+    var places = new GooglePlaces('AIzaSyClBprsTLkbUoiFhHUtSLHpWt0GHc5vGF0');
 
     places.autocomplete({input: direccion}, function(err, response) {
         if (response.predictions.length > 0){
           console.log("autocomplete: ", response.predictions[0].description);
-
           places.details({reference: response.predictions[0].reference}, function(err, response) {
             Establecimiento.findOne({_id: id}, function (err, obj){
                  if ((obj !== null) && (obj !== undefined) && (response.result !== undefined)){
+                    console.log("FIND!: "+response.result.geometry.location.lat+"-"+response.result.geometry.location.lng);
                     obj.latitud=response.result.geometry.location.lat;
                     obj.longitud=response.result.geometry.location.lng;
                     obj.save();
@@ -165,6 +178,6 @@ buscarGeo_avanzado = function () {
   });
 }
 
-
+buscarGeo_basico();
 
 

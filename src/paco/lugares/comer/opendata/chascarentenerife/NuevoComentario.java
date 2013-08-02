@@ -260,7 +260,7 @@ public class NuevoComentario extends SherlockActivity {
 	    public void taskComplete(Object result) {
 	    	if (result != null){
 	    		String responseServer = (String) result;
-	    		if ((result != null) && (result.equals("ok"))){
+	    		if (result.equals("ok")){
 	    			pd.dismiss();
 		    		Intent myIntent = new Intent(context, Principal.class);
 		    		myIntent.putExtra("guardadoComentario", true);

@@ -1,5 +1,7 @@
 package paco.lugares.comer.opendata.chascarentenerife;
 
+import static com.roscopeco.ormdroid.Query.eql;
+
 import org.json.JSONArray;
 
 import com.actionbarsherlock.app.ActionBar;
@@ -12,9 +14,11 @@ import com.roscopeco.ormdroid.ORMDroidApplication;
 
 import paco.lugares.comer.opendata.chascarentenerife.models.Establecimiento;
 import paco.lugares.comer.opendata.chascarentenerife.models.ValoracionEstablecimiento;
+import paco.lugares.comer.opendata.chascarentenerife.models.Version;
 import paco.lugares.comer.opendata.chascarentenerife.server.Utilities;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -31,6 +35,19 @@ public class Principal extends SherlockFragmentActivity {
 		super.onCreate(savedInstanceState);
 		// Configuracion BBDD
 		ORMDroidApplication.initialize(this);
+		
+		Version encontrado = Entity.query(Version.class).where(eql("zona", "Tenerife")).execute();
+		String version="";
+		if (encontrado != null){
+			version=encontrado.version;
+		}
+
+		if (version.equals("1") || version.equals("0")){
+			try {
+				ORMDroidApplication.getDefaultDatabase().delete("pacolugarescomeropendatachascarentenerifemodelsEstablecimiento", null, null);
+				ORMDroidApplication.getDefaultDatabase().delete("pacolugarescomeropendatachascarentenerifemodelsVersion", null, null);
+			}  catch (Exception e){}
+		}
 		
 		setContentView(R.layout.activity_principal);
 		

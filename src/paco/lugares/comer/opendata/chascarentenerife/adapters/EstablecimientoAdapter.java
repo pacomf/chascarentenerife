@@ -56,7 +56,9 @@ public class EstablecimientoAdapter extends BaseAdapter {
 	             
 	    Establecimiento item = items.get(position);
 	    
-	    Valoracion vE = ValoracionEstablecimiento.valoracion.get(item.idserver);
+	    Valoracion vE=null;
+	    if (ValoracionEstablecimiento.valoracion != null)
+	    	vE = ValoracionEstablecimiento.valoracion.get(item.idserver);
 	    
 	    if (vE != null){
 	    	TextView mediaTV = (TextView) vi.findViewById(R.id.media);
