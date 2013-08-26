@@ -89,7 +89,7 @@ module.exports = function(app){
     }
 
     listComentariosEstablecimiento = function(req, res) {  
-        Comentario.find({idestablecimiento: req.params.establecimiento}).sort({fecha:1}).limit(10).exec(function(error, comentarios) {
+        Comentario.find({idestablecimiento: req.params.establecimiento}).sort({fecha:-1}).limit(10).exec(function(error, comentarios) {
             res.send(comentarios);  
         });
     };
